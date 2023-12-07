@@ -18,6 +18,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    git
     bat
     zsh
     starship
@@ -94,6 +95,8 @@
 
   programs.git = {
       enable = true;
+      userName = "vorber";
+      userEmail = "vorber@gmail.com";
       includes = [
         { path = "~/.gitlocalconfig"; }
       ];
