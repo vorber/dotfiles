@@ -17,12 +17,11 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
+  home.packages = with pkgs; [
+    bat
+    zsh
+    starship
+# # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
@@ -39,6 +38,7 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    #"/config/starship.toml" = ../starship.toml;
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -63,9 +63,33 @@
   #  /etc/profiles/per-user/vorber/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.zsh = {
+    enable = true;
+    shellAliases = {
+      hm="home-manager";
+      hmd="cd ~/dotfiles/home-manager/";
+      hms="home-manager switch --flake ~/dotfiles/home-manager#vorber";
+      hmp="home-manager packages";
+      hmu="nix flake update ~/dotfiles/nix/home-manager && hms";
+      hmf="home-manager --flake ~/dotfiles/home-manager#vorber" 
+    };
+    history.size = 10000;
+    history.path = "${config.xdg.dataHome}/zsh/history";
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "command-not-found" "common-aliases" "dotnet" "extract" "fancy-ctrl-z" "starship" "themes" "vim-interaction" ];
+      theme = "af-magic";
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = pkgs.lib.importTOML ../starship.toml;
+    #settings = pkgs.lib.importTOML "${config.xdg.configHome}/starship.toml";
+  };
 }
