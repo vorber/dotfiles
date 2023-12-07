@@ -21,6 +21,7 @@
     bat
     zsh
     starship
+    thefuck
 # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -38,7 +39,6 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    #"/config/starship.toml" = ../starship.toml;
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -76,7 +76,7 @@
       hms="home-manager switch --flake ~/dotfiles/home-manager#vorber";
       hmp="home-manager packages";
       hmu="nix flake update ~/dotfiles/nix/home-manager && hms";
-      hmf="home-manager --flake ~/dotfiles/home-manager#vorber" 
+      hmf="home-manager --flake ~/dotfiles/home-manager#vorber";
     };
     history.size = 10000;
     history.path = "${config.xdg.dataHome}/zsh/history";
@@ -90,6 +90,12 @@
   programs.starship = {
     enable = true;
     settings = pkgs.lib.importTOML ../starship.toml;
-    #settings = pkgs.lib.importTOML "${config.xdg.configHome}/starship.toml";
+  };
+
+  programs.git = {
+      enable = true;
+      includes = [
+        { path = "~/.gitlocalconfig"; }
+      ];
   };
 }
