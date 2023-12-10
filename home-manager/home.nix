@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -23,6 +23,8 @@
     zsh
     starship
     thefuck
+    foot
+    bashInteractive
 # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -40,6 +42,7 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+     # ".config/bash/.bashrc" = ../bashrc;
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -64,11 +67,23 @@
   #  /etc/profiles/per-user/vorber/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
+    TERMINAL = "foot";
     EDITOR = "nvim";
+    SHELL = "zsh";   
   };
 
+  targets.genericLinux.enable = true;
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.bat.enable = true;
+  programs.thefuck.enable = true;
+  programs.foot.enable = true;
+  programs.bash = {
+    enable = true;
+    profileExtra = builtins.readFile ../bash_profile;
+    initExtra = builtins.readFile ../bashrc;
+  };
+
   programs.zsh = {
     enable = true;
     shellAliases = {
@@ -78,9 +93,18 @@
       hmp="home-manager packages";
       hmu="nix flake update ~/dotfiles/nix/home-manager && hms";
       hmf="home-manager --flake ~/dotfiles/home-manager#vorber";
+      vim="nvim";
+      ".."="cd ..";
     };
     history.size = 10000;
     history.path = "${config.xdg.dataHome}/zsh/history";
+    initExtra = ''
+      source /home/vorber/.nix-profile/etc/profile.d/nix.sh
+      
+      export DOTNET_ROOT=$HOME/.dotnet
+      export PATH=$PATH:$HOME/.dotnet/tools
+      export PATH=$PATH:$HOME/.dotnet
+    '';
     oh-my-zsh = {
       enable = true;
       plugins = [ "command-not-found" "common-aliases" "dotnet" "extract" "fancy-ctrl-z" "starship" "themes" "vim-interaction" ];
@@ -94,11 +118,19 @@
   };
 
   programs.git = {
-      enable = true;
-      userName = "vorber";
-      userEmail = "vorber@gmail.com";
-      includes = [
-        { path = "~/.gitlocalconfig"; }
-      ];
+    enable = true;
+    userName = "vorber";
+    userEmail = "vorber@gmail.com";
+    delta.enable = true;
+    includes = [
+      { path = "~/.gitlocalconfig"; }
+    ];
   };
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+  };
+
 }
