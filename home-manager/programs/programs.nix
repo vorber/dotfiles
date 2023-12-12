@@ -60,6 +60,5 @@
     enableZshIntegration = true;
   };
 
-  foot = import ./term/foot.nix {};
-
+  #foot = import ./term/foot.nix {};
 }
