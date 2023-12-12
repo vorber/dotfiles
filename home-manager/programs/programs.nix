@@ -6,8 +6,8 @@
   
   bash = {
     enable = true;
-    profileExtra = builtins.readFile ../bash_profile;
-    initExtra = builtins.readFile ../bashrc;
+    profileExtra = builtins.readFile ../../bash_profile;
+    initExtra = builtins.readFile ../../bashrc;
   };
 
   zsh = {
@@ -40,7 +40,7 @@
 
   starship = {
     enable = true;
-    settings = pkgs.lib.importTOML ../starship.toml;
+    settings = pkgs.lib.importTOML ../../starship.toml;
   };
 
   
