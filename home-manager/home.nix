@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [./programs];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "vorber";
@@ -23,7 +24,6 @@
     zsh
     starship
     thefuck
-    #foot
     bashInteractive
 # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -67,7 +67,7 @@
   #  /etc/profiles/per-user/vorber/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    TERMINAL = "foot";
+    TERMINAL = "wezterm";
     EDITOR = "nvim";
     SHELL = "zsh";   
   };
@@ -75,7 +75,7 @@
   targets.genericLinux.enable = true;
 #  xdg.mime.enable = true;
   xdg.systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
-  programs = import ./programs/programs.nix {
-    inherit config pkgs lib;
-  };
+#  programs = import ./programs/programs.nix {
+#    inherit config pkgs lib;
+#  };
 }
