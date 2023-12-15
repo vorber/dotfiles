@@ -1,0 +1,7 @@
+require("autopairs")
+require("colors")
+require("fidget")
+require("leap")
+require("lsp")
+require("telescope")
+require("treesitter")

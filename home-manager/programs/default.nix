@@ -2,6 +2,7 @@
 {
   imports = [
     ./programs.nix
-#    ./term/wezterm.nix
+    ./nvim
+# nix   ./term/wezterm.nix
   ];
 }
