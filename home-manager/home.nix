@@ -67,7 +67,7 @@
   #  /etc/profiles/per-user/vorber/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    TERMINAL = "wezterm";
+#    TERMINAL = "wezterm";
     EDITOR = "nvim";
     SHELL = "zsh";   
   };

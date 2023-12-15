@@ -8,12 +8,19 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixgl = {
+      url = "github:guibou/nixGL";
+      #inputs.nixpkgs.follows = "nixpkgs";
+    };    
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixgl, nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        pkgs.overlays = [ nixgl.overlay ];
+      };
     in {
       homeConfigurations."vorber" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
