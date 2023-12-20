@@ -8,8 +8,9 @@ vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
 vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
 vim.keymap.set('', 'H', '^', {remap = false})
 vim.keymap.set('', 'L', '$', {remap = false})
+-- seach stays centered
 vim.keymap.set('n', 'n', 'nzz', {remap = false})
-vim.keymap.set('n', 'n', 'Nzz', {remap = false})
+vim.keymap.set('n', 'N', 'Nzz', {remap = false})
 --vim.keymap.set('n', '<S-CR>', 'O<Esc>')
 --  vim.keymap.set('n', '<enter>', 'o<Esc>')
 
@@ -25,6 +26,33 @@ vim.keymap.set("v", "<", "<gv", {remap = false})
 vim.keymap.set("v", ">", ">gv", {remap = false})
 
 vim.keymap.set("x", "s", ":s/\\%V", {remap = false})
+--move selection up/down
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+--stay where you where with J
+vim.keymap.set("n", "J", "mzJ`z")
+
+--half-page jumps centered
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+-- paste without yanking
+vim.keymap.set("x", "<leader>p", '"_dP')
+
+-- yank to system clipboard
+vim.keymap.set("n", "<leader>y", "\"+y")
+vim.keymap.set("v", "<leader>y", "\"+y")
+vim.keymap.set("n", "<leader>Y", "\"+Y")
+
+-- ctrl-c in block mode
+vim.keymap.set("i", "<C-c>", "<Esc>")
+
+vim.keymap.set("n", "Q", "<nop>")
+
+vim.keymap.set("n", "<leader>f", function ()
+    vim.lsp.buf.format()
+end)
+
 --Options
 ---vim.opt.guicursor = ""
 vim.opt.cursorline = true

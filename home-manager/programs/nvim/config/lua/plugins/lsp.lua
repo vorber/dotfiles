@@ -1,10 +1,19 @@
-
 vim.keymap.set('n', "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set('n', "<leader>q", vim.diagnostic.setloclist)
-vim.keymap.set('n', "[d", vim.diagnostic.goto_next)
-vim.keymap.set('n', "]d", vim.diagnostic.goto_prev)
+vim.keymap.set('n', "]d", vim.diagnostic.goto_next)
+vim.keymap.set('n', "[d", vim.diagnostic.goto_prev)
+
+--vim.lsp.set_log_level 'trace'
+--require('vim.lsp.log').set_format_func(vim.inspect)
 
 local on_attach = function(_, bufnr)
+    print("on_attach enter")
+    local function buf_set_option(...)
+        vim.api.nvim_buf_set_option(bufnr, ...)
+    end
+
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
     local nmap = function(mode, keys, func, desc)
         if desc then
             desc = 'LSP: ' .. desc
@@ -12,6 +21,7 @@ local on_attach = function(_, bufnr)
         vim.keymap.set(mode, keys, func, {buffer = bufnr, desc = desc})
     end
 
+    print("Setting keymaps on buffer attach")
     nmap('n', "K", vim.lsp.buf.hover, "Hover Documentation")
     nmap('n', "C-k", vim.lsp.buf.signature_help, "Signature Documentation")
 
@@ -41,26 +51,11 @@ local on_attach = function(_, bufnr)
     })
 end
 
-require('mason').setup({})
-local servers = { 'omnisharp' }
-
-require('mason-lspconfig').setup({
-    ensure_installed = servers,
---    handlers = {
---        lsp_zero.default_setup,
---    },
-})
+local servers = { 'omnisharp', 'nil_ls' }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 --capabilities.textDocument.completion.completionItem.snippetSupport = false
-
-for _, lsp in ipairs(servers) do
-    require('lspconfig')[lsp].setup {
-        on_attach = on_attach,
-        capabilities = capabilities
-    }
-end
 
 local setup = function(server)
     server.setup {
@@ -73,7 +68,11 @@ local setup = function(server)
     }
 end
 setup(require('ionide'))
-require('fidget').setup()
+
+for _, lsp in ipairs(servers) do
+    setup(require('lspconfig')[lsp])
+end
+
 
 -- setup stuff for lua, since all configs are in it anyway
 local runtime_path = vim.split(package.path, ';')
@@ -100,7 +99,7 @@ require('lspconfig').lua_ls.setup {
         },
     },
 }
-
+--TODO: extract cmp into it's own config
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 cmp.setup({

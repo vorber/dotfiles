@@ -1,2 +1,2 @@
-require("vorber.remap")
-require("vorber.set")
+require("remap")
+require("set")

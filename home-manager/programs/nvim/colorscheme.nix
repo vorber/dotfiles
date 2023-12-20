@@ -2,9 +2,18 @@
 {
   programs.neovim = {
     plugins = with pkgs.vimPlugins; [
-      rose-pine
+  {
+      plugin = rose-pine;
+      type = "lua";
+      config = /* lua */''
+        require("rose-pine").setup({
+            variant = 'auto',
+            })
+      '';
+  }
     ];
-#    extraLuaConfig = /* lua */ ''
-#    '';
+    extraLuaConfig = /* lua */ ''
+        vim.cmd('colorscheme rose-pine')
+    '';
   };
 }
