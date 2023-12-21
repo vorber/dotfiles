@@ -74,6 +74,7 @@
 
   targets.genericLinux.enable = true;
 #  xdg.mime.enable = true;
+  xdg.enable = true;
   xdg.systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
 #  programs = import ./programs/programs.nix {
 #    inherit config pkgs lib;
