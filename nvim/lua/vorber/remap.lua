@@ -1,4 +1,3 @@
---Keymaps
 vim.g.mapleader = " "
 
 vim.keymap.set('i', 'jj', '<ESC>', {silent = true})
@@ -8,9 +7,8 @@ vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
 vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
 vim.keymap.set('', 'H', '^', {remap = false})
 vim.keymap.set('', 'L', '$', {remap = false})
--- seach stays centered
 vim.keymap.set('n', 'n', 'nzz', {remap = false})
-vim.keymap.set('n', 'N', 'Nzz', {remap = false})
+vim.keymap.set('n', 'n', 'Nzz', {remap = false})
 --vim.keymap.set('n', '<S-CR>', 'O<Esc>')
 --  vim.keymap.set('n', '<enter>', 'o<Esc>')
 
@@ -53,39 +51,4 @@ vim.keymap.set("n", "<leader>f", function ()
     vim.lsp.buf.format()
 end)
 
---Options
----vim.opt.guicursor = ""
-vim.opt.cursorline = true
 
-vim.opt.nu = true
-vim.opt.relativenumber = true
-
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-
-vim.opt.smartindent = true
-
-vim.opt.wrap = false
-
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
-
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
-
-vim.opt.termguicolors = true
-
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
-
-vim.opt.updatetime = 50
-vim.opt.colorcolumn = "120"
-
-
---require("vorber.remap")
---require("vorber.set")
---require("plugins")
