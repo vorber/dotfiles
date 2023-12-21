@@ -11,11 +11,11 @@
     ];
 
     xdg.configFile = {
-        nvim = {
-            source = 
-                config.lib.file.mkOutOfStoreSymlink
-                    "${config.home.homeDirectory}/dotfiles/nvim";
-            recursive = true;
-        };
+      nvim = {
+        source = 
+          config.lib.file.mkOutOfStoreSymlink ../../../nvim;
+          #"${config.home.homeDirectory}/dotfiles/nvim";
+        recursive = true;
+      };
     };
 }

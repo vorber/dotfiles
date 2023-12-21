@@ -3,7 +3,7 @@
   programs = {
     home-manager.enable = true;
     bat.enable = true;
-    thefuck.enable = true;
+    #thefuck.enable = true;
     
     bash = {
       enable = true;
