@@ -9,10 +9,7 @@
         ripgrep
         fd
     ];
-    #home.file."./.config/nvim/" = {
-        #source = ./../../../nvim;
-        #recursive = true;
-    #};
+
     xdg.configFile = {
         nvim = {
             source = 
