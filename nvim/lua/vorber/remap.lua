@@ -51,4 +51,4 @@ vim.keymap.set("n", "<leader>f", function ()
     vim.lsp.buf.format()
 end)
 
-vim.keymap.set("n", "<C-n>", ":Neotree toggle filesystem reveal left<CR>")
+vim.keymap.set("n", "<leader>ft", ":Neotree toggle filesystem reveal left<CR>")
