@@ -1,1 +1,4 @@
-return {'https://gitlab.com/madyanov/svart.nvim'}
+return {
+    url = "https://gitlab.com/madyanov/svart.nvim",
+    as = "svart.nvim"
+}
