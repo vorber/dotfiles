@@ -1,3 +1,3 @@
 return {
-    'nsails/lspkind.nvim'
+    'onsails/lspkind.nvim'
 }

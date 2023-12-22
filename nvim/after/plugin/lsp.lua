@@ -98,6 +98,7 @@ require('lspconfig').lua_ls.setup {
 --TODO: extract cmp into it's own config
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
+local lspkind = require('lspkind')
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
@@ -116,10 +117,11 @@ cmp.setup({
     },
     --formatting = lsp_zero.cmp_format(),
     mapping = cmp.mapping.preset.insert({
-        ['<S-Tab>'] = cmp.mapping.select_prev_item(cmp_select),
-        ['<Tab>'] = cmp.mapping.select_next_item(cmp_select),
-        ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-        ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
     formatting = {
         format = lspkind.cmp_format({
