@@ -1,4 +1,3 @@
-
 vim.keymap.set('n', "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set('n', "<leader>q", vim.diagnostic.setloclist)
 vim.keymap.set('n', "]d", vim.diagnostic.goto_next)
@@ -15,7 +14,7 @@ local on_attach = function(_, bufnr)
         if desc then
             desc = 'LSP: ' .. desc
         end
-        vim.keymap.set(mode, keys, func, {buffer = bufnr, desc = desc})
+        vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = desc })
     end
 
     nmap('n', "K", vim.lsp.buf.hover, "Hover Documentation")
@@ -31,13 +30,13 @@ local on_attach = function(_, bufnr)
     nmap('n', "<leader>ds", require('telescope.builtin').lsp_document_symbols, "[D]ocument [S]ymbols")
     nmap('n', "<leader>ws", require('telescope.builtin').lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
-    vim.api.nvim_buf_create_user_command(bufnr,  'Format', function(_)
+    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
         if vim.lsp.buf.format then
             vim.lsp.buf.format()
         elseif vim.lsp.buf.formatting then
             vim.lsp.buf.formatting()
         end
-    end, {desc = 'Format current buffer with LSP'})
+    end, { desc = 'Format current buffer with LSP' })
 
     vim.api.nvim_buf_create_user_command(bufnr, "RefreshCodeLens", function()
         vim.lsp.codelens.refresh()
@@ -91,28 +90,29 @@ require('lspconfig').lua_ls.setup {
                 library = vim.api.nvim_get_runtime_file('', true),
                 checkThirdParty = false,
             },
-            telemetry = {enable = false},
+            telemetry = { enable = false },
         },
     },
 }
 
 --TODO: extract cmp into it's own config
 local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 cmp.setup({
     snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
+        -- REQUIRED - you must specify a snippet engine
+        expand = function(args)
+            -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        end,
     },
     sources = {
-        {name = 'path'},
-        {name = 'nvim_lsp'},
-        {name = 'nvim_lua'},
+        { name = 'path' },
+        { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
+        { name = 'buffer' }
     },
     --formatting = lsp_zero.cmp_format(),
     mapping = cmp.mapping.preset.insert({
@@ -121,4 +121,16 @@ cmp.setup({
         ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
         ['<C-Space>'] = cmp.mapping.complete(),
     }),
+    formatting = {
+        format = lspkind.cmp_format({
+            mode = "symbol_text",
+            menu = ({
+                buffer = "[Buffer]",
+                nvim_lsp = "[LSP]",
+                luasnip = "[LuaSnip]",
+                nvim_lua = "[Lua]",
+                latex_symbols = "[Latex]",
+            })
+        }),
+    },
 })

@@ -1,0 +1,3 @@
+return {
+    'nsails/lspkind.nvim'
+}
