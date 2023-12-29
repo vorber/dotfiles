@@ -7,19 +7,19 @@
     
     bash = {
       enable = true;
-      profileExtra = builtins.readFile ../../bash_profile;
-      initExtra = builtins.readFile ../../bashrc;
+      profileExtra = builtins.readFile ../../../bash_profile;
+      initExtra = builtins.readFile ../../../bashrc;
     };
 
     zsh = {
       enable = true;
       shellAliases = {
         hm="home-manager";
-        hmd="cd ~/dotfiles/home-manager/";
-        hms="home-manager switch --flake ~/dotfiles/home-manager#vorber";
+        hmd="cd ~/dotfiles/nix/home/";
+        hms="home-manager switch --flake ~/dotfiles/nix#vorber";
         hmp="home-manager packages";
-        hmu="nix flake update ~/dotfiles/nix/home-manager && hms";
-        hmf="home-manager --flake ~/dotfiles/home-manager#vorber";
+        hmu="nix flake update ~/dotfiles/nix/home && hms";
+        hmf="home-manager --flake ~/dotfiles/nix#vorber";
         vim="nvim";
         ".."="cd ..";
       };
@@ -41,7 +41,7 @@
 
     starship = {
       enable = true;
-      settings = pkgs.lib.importTOML ../../starship.toml;
+      settings = pkgs.lib.importTOML ../../../starship.toml;
     };
 
     
