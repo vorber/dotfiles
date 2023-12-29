@@ -21,16 +21,17 @@
         inherit system;
         pkgs.overlays = [ nixgl.overlay ];
       };
-    in {
-      homeConfigurations."vorber" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home/home.nix ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+      user = "vorber"; 
+      home = flakeName: isNixOS: import ./home/get.nix { inherit pkgs isNixOS flakeName; };
+      mkFlair = name: isNixOS: {
+        "${name}" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          inherit (home name isNixOS) modules;
+          # Optionally use extraSpecialArgs
+          # to pass through arguments to home.nix
+        };
       };
+    in {
+      homeConfigurations = (mkFlair "${user}-nixos" true) // (mkFlair "${user}-linux" false);
     };
 }

@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }:
-
 {
   imports = [./programs];
   # Home Manager needs a bit of information about you and the paths it should
@@ -72,8 +71,6 @@
     SHELL = "zsh";   
   };
 
-  targets.genericLinux.enable = true;
-#  xdg.mime.enable = true;
   xdg.enable = true;
   xdg.systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
 #  programs = import ./programs/programs.nix {

@@ -1,64 +1,67 @@
-{ config, pkgs, lib, ...}:
+{ config, pkgs, lib, ...}: 
 {
-  programs = {
-    home-manager.enable = true;
-    bat.enable = true;
-    thefuck.enable = true;
-    
-    bash = {
-      enable = true;
-      profileExtra = builtins.readFile ../../../bash_profile;
-      initExtra = builtins.readFile ../../../bashrc;
-    };
-
-    zsh = {
-      enable = true;
-      shellAliases = {
-        hm="home-manager";
-        hmd="cd ~/dotfiles/nix/home/";
-        hms="home-manager switch --flake ~/dotfiles/nix#vorber";
-        hmp="home-manager packages";
-        hmu="nix flake update ~/dotfiles/nix/home && hms";
-        hmf="home-manager --flake ~/dotfiles/nix#vorber";
-        vim="nvim";
-        ".."="cd ..";
-      };
-      history.size = 10000;
-      history.path = "${config.xdg.dataHome}/zsh/history";
-      initExtra = ''
-        source /home/vorber/.nix-profile/etc/profile.d/nix.sh
-        
-        export DOTNET_ROOT=$HOME/.dotnet
-        export PATH=$PATH:$HOME/.dotnet/tools
-        export PATH=$PATH:$HOME/.dotnet
-      '';
-      oh-my-zsh = {
+  config = 
+  {
+    programs = {
+      home-manager.enable = true;
+      bat.enable = true;
+      thefuck.enable = true;
+      
+      bash = {
         enable = true;
-        plugins = [ "command-not-found" "common-aliases" "dotnet" "extract" "fancy-ctrl-z" "starship" "themes" "vim-interaction" ];
-        theme = "af-magic";
+        profileExtra = builtins.readFile ../../../bash_profile;
+        initExtra = builtins.readFile ../../../bashrc;
       };
-    };
 
-    starship = {
-      enable = true;
-      settings = pkgs.lib.importTOML ../../../starship.toml;
-    };
+      zsh = {
+        enable = true;
+        shellAliases = {
+          hm="home-manager";
+          hmd="cd ~/dotfiles/nix/home/";
+          hms="home-manager switch --flake ~/dotfiles/nix#${config.flakeName}";
+          hmp="home-manager packages";
+          hmu="nix flake update ~/dotfiles/nix/home && hms";
+          hmf="home-manager --flake ~/dotfiles/nix#${config.flakeName}";
+          vim="nvim";
+          ".."="cd ..";
+        };
+        history.size = 10000;
+        history.path = "${config.xdg.dataHome}/zsh/history";
+        initExtra = ''
+          source /home/vorber/.nix-profile/etc/profile.d/nix.sh
+          
+          export DOTNET_ROOT=$HOME/.dotnet
+          export PATH=$PATH:$HOME/.dotnet/tools
+          export PATH=$PATH:$HOME/.dotnet
+        '';
+        oh-my-zsh = {
+          enable = true;
+          plugins = [ "command-not-found" "common-aliases" "dotnet" "extract" "fancy-ctrl-z" "starship" "themes" "vim-interaction" ];
+          theme = "af-magic";
+        };
+      };
 
-    
-    git = {
-      enable = true;
-      userName = "vorber";
-      userEmail = "vorber@gmail.com";
-      delta.enable = true;
-      includes = [
-        { path = "~/.gitlocalconfig"; }
-      ];
-    };
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-      enableBashIntegration = true;
-      enableZshIntegration = true;
+      starship = {
+        enable = true;
+        settings = pkgs.lib.importTOML ../../../starship.toml;
+      };
+
+      
+      git = {
+        enable = true;
+        userName = "vorber";
+        userEmail = "vorber@gmail.com";
+        delta.enable = true;
+        includes = [
+          { path = "~/.gitlocalconfig"; }
+        ];
+      };
+      direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+      };
     };
   };
 }

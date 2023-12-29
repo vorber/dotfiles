@@ -21,7 +21,7 @@ if [ -f /home/vorber/.nix-profile/etc/profile.d/nix.sh ]; then
 fi
 alias hm='home-manager'
 alias hmd='cd ~/dotfiles/nix/home/'
-alias hms='home-manager switch --flake ~/dotfiles/nix#vorber'
+alias hms='home-manager switch --flake ~/dotfiles/nix#vorber-linux'
 alias hmp='home-manager packages'
 alias hmu='nix flake update ~/dotfiles/nix && hms'
 
