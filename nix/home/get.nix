@@ -1,11 +1,14 @@
-{ pkgs, flakeName ? "myFlake", isNixOS ? false, ... }: 
+{ pkgs, settings, ... }: 
 let 
   lib = pkgs.lib;
+  isNixOS = settings.isNixOS or false;
+  flakeName = settings.flakeName or "vorber";
+
 in rec {
   hmConfig = let
     inherit (pkgs.stdenv) isLinux;
   in {
-    options = {
+    options = {#TODO: refactor to use single attr set?
       isNixOS = lib.mkOption {
         type = lib.types.bool;
         default = false;
@@ -20,6 +23,7 @@ in rec {
     config = {
       targets.genericLinux.enable = isLinux && !isNixOS;
       xdg.mime.enable = isLinux && !isNixOS;
+      games.enable = settings.games.enable or false;
       inherit isNixOS;
       inherit flakeName;
     };

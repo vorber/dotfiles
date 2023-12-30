@@ -21,6 +21,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.kernelModules = ["amdgpu"];
 
   fileSystems = {
     "/".options = ["compress=zstd"];
@@ -60,6 +61,7 @@
   # Configure keymap in X11
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.options = "eurosign:e,caps:escape";
+  services.xserver.videoDrivers = ["amdgpu"];
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -68,10 +70,17 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  #vulkan
+  hardware.opengl.driSupport = true; # This is already enabled by default
+  hardware.opengl.driSupport32Bit = true; # For 32 bit applications
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
   programs.zsh.enable = true;
+  programs.steam.enable = true; #TODO: can I get rid of it and use it through flake/hm?
+  programs.gamemode.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vorber = {
     isNormalUser = true;
