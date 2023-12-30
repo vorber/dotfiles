@@ -17,21 +17,36 @@
   outputs = { nixgl, nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
+      user = "vorber"; 
+      
       pkgs = import nixpkgs {
         inherit system;
-        pkgs.overlays = [ nixgl.overlay ];
+        config.allowUnfree = true;
+        config.allowUnfreePredicate = (pkg: true);
+        overlays = [ nixgl.overlay ];
       };
-      user = "vorber"; 
       home = flakeName: isNixOS: import ./home/get.nix { inherit pkgs isNixOS flakeName; };
-      mkFlair = name: isNixOS: {
-        "${name}" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          inherit (home name isNixOS) modules;
-          # Optionally use extraSpecialArgs
-          # to pass through arguments to home.nix
-        };
+      genericLinux = home-manager.lib.homeManagerConfiguration {
+        inherit system;
+      	configuration = { imports = (home "generic" false).modules; };
+        homeDirectory = "/home/${user}";
+        username = user;
+        stateVersion = "23.11";
       };
     in {
-      homeConfigurations = (mkFlair "${user}-nixos" true) // (mkFlair "${user}-linux" false);
+
+      nixosConfigurations.${user} = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./nixos/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useUserPackages = true;
+            home-manager.users.${user} = { imports = (home "${user}" true).modules; };
+          }
+        ];
+      };
+      generic = genericLinux.activationPackage;
+
+      #homeConfigurations = (mkFlair "${user}-nixos" true) // (mkFlair "${user}-linux" false);
     };
 }

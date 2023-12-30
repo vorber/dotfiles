@@ -2,7 +2,7 @@
 let 
   lib = pkgs.lib;
 in rec {
-  hmStandaloneConfig = let
+  hmConfig = let
     inherit (pkgs.stdenv) isLinux;
   in {
     options = {
@@ -18,13 +18,12 @@ in rec {
       };
     };
     config = {
-      targets.genericLinux.enable = isLinux;
-      xdg.mime.enable = isLinux;
+      targets.genericLinux.enable = isLinux && !isNixOS;
+      xdg.mime.enable = isLinux && !isNixOS;
       inherit isNixOS;
       inherit flakeName;
     };
   };
-  modules = (lib.optionals (!isNixOS) [hmStandaloneConfig])
-  ++ [ ./home.nix ];
+  modules = [hmConfig] ++ [ ./home.nix ];
 }
 

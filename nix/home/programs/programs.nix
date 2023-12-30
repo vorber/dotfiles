@@ -22,13 +22,17 @@
           hmp="home-manager packages";
           hmu="nix flake update ~/dotfiles/nix/home && hms";
           hmf="home-manager --flake ~/dotfiles/nix#${config.flakeName}";
+          nrs="sudo nixos-rebuild switch --flake ~/dotfiles/nix#${config.flakeName}";
+          nru="sudo nixos-rebuild switch --flake ~/dotfiles/nix#${config.flakeName}";
           vim="nvim";
           ".."="cd ..";
         };
         history.size = 10000;
         history.path = "${config.xdg.dataHome}/zsh/history";
         initExtra = ''
-          source /home/vorber/.nix-profile/etc/profile.d/nix.sh
+          if [ -f "/home/vorber/.nix-profile/etc/profile.d/nix.sh" ]; then
+            source /home/vorber/.nix-profile/etc/profile.d/nix.sh 
+          fi
           
           export DOTNET_ROOT=$HOME/.dotnet
           export PATH=$PATH:$HOME/.dotnet/tools
