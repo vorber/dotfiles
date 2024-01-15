@@ -4,7 +4,8 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { config, lib, pkgs, ... }:
-
+let user = "vorber"; #TODO: receive from flake
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -13,21 +14,47 @@
   
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-    auto-optimise-store = true;
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+
+    settings = {
+      experimental-features = "nix-command flakes";
+      auto-optimise-store = true;
+      warn-dirty = false;
+      keep-outputs = true;
+      keep-derivations = true;
+    };
   };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.kernelModules = ["amdgpu"];
+  boot.supportedFilesystems = [ "ntfs" ];
+
+  boot.binfmt.registrations.appimage = {
+    wrapInterpreterInShell = false;
+    interpreter = "${pkgs.appimage-run}/bin/appimage-run";
+    recognitionType = "magic";
+    offset = 0;
+    mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
+    magicOrExtension = ''\x7fELF....AI\x02'';
+  };
 
   fileSystems = {
     "/".options = ["compress=zstd"];
     "/home".options = ["compress=zstd"];
     "/nix".options = ["compress=zstd" "noatime"];
     "/var/log".options = ["compress=zstd"];
+#    "/run/media/${user}" = {
+#      device = "dev/sda1";
+#      fsType = "ntfs-3g";
+#      options = ["rw" "uid=1000"];
+#    };
   };
 
   networking.hostName = "vorber-nixos"; # Define your hostname.
@@ -50,18 +77,25 @@
     useXkbConfig = true; # use xkb.options in tty.
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services = {
+    udev.packages = with pkgs; [
+      bazecor
+    ];
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  
+    xserver = {
+      # Enable the X11 windowing system.
+      enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb.layout = "us";
-  services.xserver.xkb.options = "eurosign:e,caps:escape";
-  services.xserver.videoDrivers = ["amdgpu"];
+      # Enable the GNOME Desktop Environment.
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+
+      # Configure keymap in X11
+      xkb.layout = "us";
+      xkb.options = "eurosign:e,caps:escape";
+      videoDrivers = ["amdgpu"];
+    };
+  };
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -102,7 +136,6 @@
 
   environment.variables.EDITOR = "nvim";
 
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -117,6 +150,14 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
+  networking.firewall = {
+    allowedTCPPorts = [
+      6987 #rtorrent
+    ];
+    allowedUDPPorts = [
+      6987 #rtorrent
+    ];
+  };
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.

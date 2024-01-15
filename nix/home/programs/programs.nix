@@ -66,6 +66,20 @@
         enableBashIntegration = true;
         enableZshIntegration = true;
       };
+
+      rtorrent = {
+        enable = true;
+        #TODO: don't hardcode home path
+        extraConfig = ''
+          upload_rate = 1000
+          directory = /home/vorber/incoming
+          session = /home/vorber/incoming/.rtorrent
+          port_range = 6900-6999
+          encryption = allow_incoming,try_outgoing,enable_retry
+          dht = on
+          schedule2 = watch_start, 20, 10, "load.start=~/incoming/torrents/*.torrent"
+       '';        
+      };
     };
   };
 }

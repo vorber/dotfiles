@@ -40,7 +40,7 @@
             username = user;
             stateVersion = "23.11";
           };
-        nixosFlake = "${user}-nixos";
+      nixosFlake = "${user}-nixos";
     in {
       nixosConfigurations.${nixosFlake} = 
         let settings = {
