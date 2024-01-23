@@ -3,33 +3,13 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
-let user = "vorber"; #TODO: receive from flake
-in
+{ pkgs, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
   
-  nixpkgs.config.allowUnfree = true;
-
-  nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-
-    settings = {
-      experimental-features = "nix-command flakes";
-      auto-optimise-store = true;
-      warn-dirty = false;
-      keep-outputs = true;
-      keep-derivations = true;
-    };
-  };
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -50,11 +30,6 @@ in
     "/home".options = ["compress=zstd"];
     "/nix".options = ["compress=zstd" "noatime"];
     "/var/log".options = ["compress=zstd"];
-#    "/run/media/${user}" = {
-#      device = "dev/sda1";
-#      fsType = "ntfs-3g";
-#      options = ["rw" "uid=1000"];
-#    };
   };
 
   networking.hostName = "vorber-nixos"; # Define your hostname.
@@ -62,8 +37,6 @@ in
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
-  # Set your time zone.
-  time.timeZone = "Europe/Tallinn";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -111,30 +84,16 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  programs.zsh.enable = true;
   programs.steam.enable = true; #TODO: can I get rid of it and use it through flake/hm?
   programs.gamemode.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vorber = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    shell = pkgs.zsh;
     packages = with pkgs; [
       firefox
       tree
     ];
   };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    curl
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-  ];
-
-  environment.variables.EDITOR = "nvim";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

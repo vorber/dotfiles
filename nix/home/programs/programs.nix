@@ -72,12 +72,18 @@
         #TODO: don't hardcode home path
         extraConfig = ''
           upload_rate = 1000
-          directory = /home/vorber/incoming
+          directory = /home/vorber/incoming/torrents/incomplete
           session = /home/vorber/incoming/.rtorrent
           port_range = 6900-6999
           encryption = allow_incoming,try_outgoing,enable_retry
           dht = on
-          schedule2 = watch_start, 20, 10, "load.start=~/incoming/torrents/*.torrent"
+
+          schedule2 = watch_start, 20, 10, "load.start=~/incoming/torrents/*.torrent, d.custom1.set=~/incoming/complete"
+
+          # upon completion, move content to path specified above via custom1
+          method.insert = d.data_path, simple, "if=(d.is_multi_file), (cat,(d.directory),/), (cat,(d.directory),/,(d.name))"
+          method.insert = d.move_to_complete, simple, "d.directory.set=$argument.1=; execute=mkdir,-p,$argument.1=; execute=mv,-u,$argument.0=,$argument.1=; d.save_full_session="
+          method.set_key = event.download.finished,move_complete,"d.move_to_complete=$d.data_path=,$d.custom1="
        '';        
       };
     };
