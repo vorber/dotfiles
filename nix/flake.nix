@@ -8,10 +8,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixgl = {
-      url = "github:guibou/nixGL";
-      #inputs.nixpkgs.follows = "nixpkgs";
-    };    
     systems.url = "github:nix-systems/default";
     flake-utils = {
       url = "github:numtide/flake-utils";
@@ -24,7 +20,7 @@
     };
   };
 
-  outputs = inputs@{ nixgl, nixpkgs, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
       user = "vorber"; 
@@ -33,7 +29,6 @@
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (pkg: true);
-        overlays = [ nixgl.overlay ];
       };
       homeModules = settings: (import ./home/get.nix { inherit pkgs settings; }).modules;
       genericLinux = 
