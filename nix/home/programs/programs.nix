@@ -60,6 +60,7 @@
           { path = "~/.gitlocalconfig"; }
         ];
       };
+      git-credential-oauth.enable = true;
       direnv = {
         enable = true;
         nix-direnv.enable = true;
