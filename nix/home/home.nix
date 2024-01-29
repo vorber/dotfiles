@@ -21,7 +21,6 @@
   home.packages = with pkgs; [
     git
     bat
-    zsh
     starship
     thefuck
     bashInteractive
