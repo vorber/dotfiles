@@ -23,12 +23,12 @@
     # Set your time zone.
     time.timeZone = "Europe/Tallinn";
 
-    programs.zsh.enable = true;
+    programs.fish.enable = true;
     boot.isContainer = isContainer;
     users.users."${user}" = (
       if !isContainer then {
         isNormalUser = true;
-        shell = pkgs.zsh;
+        shell = pkgs.fish;
         extraGroups = ["wheel" "tty"];
       } else {
         isNormalUser = true;

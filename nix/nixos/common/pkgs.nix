@@ -1,6 +1,6 @@
 {pkgs, lib, ...}: {
     environment.systemPackages = with pkgs; [
-      zsh
+      fish
       neovim
       curl
       wget

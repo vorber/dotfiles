@@ -71,7 +71,7 @@
   home.sessionVariables = {
 #    TERMINAL = "wezterm";
     EDITOR = "nvim";
-    SHELL = "zsh";   
+    SHELL = "fish";   
   };
 
   xdg.enable = true;
