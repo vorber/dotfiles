@@ -49,7 +49,7 @@
     in {
       nixosConfigurations = {
         ${nixosFlake} = 
-          let settings = {
+          let settings = {#TODO: move these to use specialArgs/extraSpecialArgs
             isNixOS = true;
             flakeName = "${nixosFlake}";
             games.enable = true;

@@ -4,6 +4,7 @@
       neovim
       curl
       wget
+      pass
     ];
 
     environment.variables.EDITOR = "nvim";
