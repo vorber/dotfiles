@@ -87,10 +87,14 @@
   programs.steam.enable = true; #TODO: can I get rid of it and use it through flake/hm?
   programs.gamemode.enable = true;
   programs.gnupg.agent.enable = true;
+  programs.firefox.enable = true;
+  programs.firefox.nativeMessagingHosts.packages = [pkgs.passff-host];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vorber = {
     packages = with pkgs; [
+      pinentry
+      passff-host
       firefox
       tree
     ];
