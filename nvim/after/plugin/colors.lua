@@ -7,4 +7,8 @@ function TweakColors(color)
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg  = "none" })
 end
 
+require("notify").setup({
+    background_colour = "#000000",
+})
+
 TweakColors("catppuccin")

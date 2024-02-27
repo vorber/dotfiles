@@ -7,10 +7,20 @@
       bat.enable = true;
       thefuck.enable = true;
       
+      fzf = {
+        enable = true;
+        enableFishIntegration = true;
+
+      };
       bash = {
         enable = true;
         profileExtra = builtins.readFile ../../../bash_profile;
         initExtra = builtins.readFile ../../../bashrc;
+      };
+
+      zoxide = {
+        enable = true;
+        enableFishIntegration = true;
       };
 
       starship = {

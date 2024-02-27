@@ -18,6 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+    tmux-sessionx.url = "github:omerxx/tmux-sessionx";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }:
@@ -63,11 +64,15 @@
               };
               modules = [
                 ./nixos/common.nix
-                ./nixos/configuration.nix
-                  home-manager.nixosModules.home-manager {
-                    home-manager.useUserPackages = true;
-                    home-manager.users.${user}.imports = homeModules settings;
-                  }
+                ./nixos/nixos.nix
+                home-manager.nixosModules.home-manager 
+                {
+                  home-manager = {
+                    useUserPackages = true;
+                    users.${user}.imports = homeModules settings;
+                    extraSpecialArgs = { inherit inputs; };
+                  };
+                }
               ];
             };
         wsl = 
