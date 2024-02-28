@@ -8,6 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./vorber-nixos/hardware-configuration.nix
+      ./config/gaming.nix
+      ./config/DE.nix
     ];
   
   # Use the systemd-boot EFI boot loader.
@@ -54,20 +56,6 @@
     udev.packages = with pkgs; [
       bazecor
     ];
-
-    xserver = {
-      # Enable the X11 windowing system.
-      enable = true;
-
-      # Enable the GNOME Desktop Environment.
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
-
-      # Configure keymap in X11
-      xkb.layout = "us,ru";
-      xkb.options = "eurosign:e,caps:escape";
-      videoDrivers = ["amdgpu"];
-    };
   };
 
   # Enable CUPS to print documents.
@@ -89,8 +77,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  programs.steam.enable = true; #TODO: can I get rid of it and use it through flake/hm?
-  programs.gamemode.enable = true;
   programs.gnupg.agent.enable = true;
   programs.firefox.enable = true;
   programs.firefox.nativeMessagingHosts.packages = [pkgs.passff-host];
@@ -99,8 +85,6 @@
   users.users.vorber = {
     packages = with pkgs; [
       pinentry
-      #passff-host
-      #firefox
       tree
     ];
   };

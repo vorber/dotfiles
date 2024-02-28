@@ -19,6 +19,11 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     tmux-sessionx.url = "github:omerxx/tmux-sessionx";
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }:
