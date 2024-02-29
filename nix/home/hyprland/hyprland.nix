@@ -1,6 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   config = lib.mkIf config.isNixOS {
+    imports = [./waybar.nix ];
     home.packages = [pkgs.variety];
     wayland.windowManager.hyprland = {
       enable = true;
@@ -13,13 +14,13 @@
 
       settings = 
       let
-        startupScript = lib.writeShellScriptBin "start" ''
+        startupScript = pkgs.writeShellScriptBin "start" ''
           ${pkgs.waybar}/bin/waybar &
           ${pkgs.swww}/bin/swww init &
       
           sleep 1
       
-          ${pkgs.swww}/bin/swww img ${./wallpaper.png} &          
+          ${pkgs.swww}/bin/swww img ~/Pictures/wallpaper.png &          
         '';
       in
       {
@@ -28,11 +29,18 @@
         "$mod" = "SUPER";
 
         monitor = [
+#LG Electronics LG HDR 4K 0x00006F1B
+#Ancor Communications Inc ASUS VS247 G8LMTF096313
+          "desc:Ancor Communications Inc ASUS VS247 G8LMTF096313, preferred, 0x240, 1"
+          "desc:LG Electronics LG HDR 4K 0x00006F1B, preferred, 1920x0, 2"
           ",preferred,auto,1"
         ];
 
         general = {
           layout = "dwindle";
+          border_size = 3;
+          gaps_in = 5;
+          gaps_out = 0;
           resize_on_border = true;
         };
 
@@ -46,7 +54,7 @@
         dwindle = {
           pseudotile = "yes";
           preserve_split = "yes";
-          # no_gaps_when_only = "yes";
+          no_gaps_when_only = "yes";
         };
 
         decoration = {
@@ -85,7 +93,7 @@
           "$mod, T, exec, wezterm"
           "$mod, Return, exec, wezterm"
           "$mod, D, exec, rofi -show drun"
-          "$mod, T, exec, firefox"
+          "$mod, B, exec, firefox"
           "$mod, Q, killactive"
           "$mod SHIFT, F, togglefloating"
           "$mod CTRL, F, fullscreen, 0"
@@ -94,7 +102,8 @@
           "$mod, Tab, cyclenext"
           "$mod, Tab, bringactivetotop"
           "$mod, mouse_down, workspace, e-1"
-          "$mod, mouse_up, workspace, e+1"
+          "$mod SHIFT, left, workspace, e-1"
+          "$mod SHIFT, right, workspace, e+1"
           "$mod, left, movefocus, l"
           "$mod, right, movefocus, r"
           "$mod, up, movefocus, u"

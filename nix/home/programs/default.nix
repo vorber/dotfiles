@@ -6,6 +6,6 @@
     ./games.nix
     ./nvim
     ./tmux.nix
-# nix   ./term/wezterm.nix
+    ./term/wezterm.nix
   ];
 }

@@ -3,7 +3,7 @@
   programs.wezterm = {
     enable = true;
     enableBashIntegration = true;
-    enableFishIntegration = true;
+    #enableFishIntegration = true;
     #todo: source/symlink config file
   };
 }
