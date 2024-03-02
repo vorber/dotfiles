@@ -1,9 +1,12 @@
 { config, pkgs, lib, ... }:
+let
+  extraConfig = builtins.readFile ./wezterm.lua;
+in
 {
   programs.wezterm = {
     enable = true;
     enableBashIntegration = true;
     #enableFishIntegration = true;
-    #todo: source/symlink config file
+    inherit extraConfig;
   };
 }
