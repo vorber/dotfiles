@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ pkgs, launcher, ... }:
 {
   home.packages = [pkgs.variety];
   wayland.windowManager.hyprland = {
@@ -105,10 +105,8 @@
       bind = [
         "$mod, T, exec, wezterm"
         "$mod, Return, exec, wezterm -e tmux"
-        #"$mod, R, exec, wofi -S drun"
-        #"$mod, G, exec, wofi -S drun"
-        "$mod, R, exec, fuzzel"
-        "$mod, G, exec, fuzzel"
+        "$mod, R, exec, ${launcher}"
+        "$mod, G, exec, ${launcher}"
         "$mod, B, exec, firefox"
         "$mod, Q, killactive"
         "$mod SHIFT, F, togglefloating"

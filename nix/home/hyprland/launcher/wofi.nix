@@ -6,7 +6,7 @@ in
   programs.wofi = {
     enable = true;
     settings = {
-      show = ["drun" "run"];
+      show = "drun";
       layer = "top";
       location = "center";
       allow_images = true;
@@ -19,11 +19,11 @@ in
       insensitive = true;
     };   
     style = ''
-      @define-color	lavender  ${palette.base07};
-      @define-color	base  ${palette.base00};
-      @define-color	text  ${palette.base05};
-      @define-color	red  ${palette.base08};
-      @define-color	mauve  ${palette.base0E};
+      @define-color	lavender  #${palette.base07};
+      @define-color	base  #${palette.base00};
+      @define-color	text  #${palette.base05};
+      @define-color	red  #${palette.base08};
+      @define-color	mauve  #${palette.base0E};
        /* Window */
       window {
         margin: 0px;

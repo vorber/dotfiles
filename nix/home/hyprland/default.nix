@@ -1,9 +1,12 @@
 {config, pkgs, lib, ...}:
+let
+  launcher = "pkill wofi || wofi -S drun";
+in
 {
   imports = [
-      ./hyprland.nix
-      ./wlogout.nix
-      ./waybar.nix
       ./launcher/wofi.nix
+        (import ./hyprland.nix {inherit pkgs launcher;})
+        (import ./waybar.nix {inherit pkgs config launcher;})
+      ./wlogout.nix
   ];
 }

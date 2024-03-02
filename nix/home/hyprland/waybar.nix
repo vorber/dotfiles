@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, launcher, ... }:
 let
   palette = config.colorScheme.palette;
   betterTransition = "all 0.3s cubic-bezier(.55,-0.68,.48,1.682)";
@@ -72,12 +72,11 @@ in
         tooltip = false;
         format = "";
         on-click = "sleep 0.1 && wlogout";
-        #on-click = "pkill wofi || wofi-powermenu";
       };
       "custom/start" = {
         tooltip = false;
         format = " ";
-        on-click = "pkill wofi || wofi -S drun";
+        on-click = launcher;
       };
     }];
     style = ''
