@@ -91,12 +91,24 @@
           "workspaces, 1, 6, default"
         ];
       };
-
+      windowrule = [
+            "float, ^(steam)$"
+            "tile,title:^(WPS)(.*)$"
+            # Dialogs
+            "float,title:^(Open File)(.*)$"
+            "float,title:^(Open Folder)(.*)$"
+            "float,title:^(Save As)(.*)$"
+            "float,title:^(Library)(.*)$"
+            "float,title:^(xdg-desktop-portal)(.*)$"
+            "nofocus,title:^(.*)(mvi)$"
+          ];
       bind = [
         "$mod, T, exec, wezterm"
         "$mod, Return, exec, wezterm -e tmux"
-        "$mod, R, exec, wofi -S drun"
-        "$mod, G, exec, wofi -S drun"
+        #"$mod, R, exec, wofi -S drun"
+        #"$mod, G, exec, wofi -S drun"
+        "$mod, R, exec, fuzzel"
+        "$mod, G, exec, fuzzel"
         "$mod, B, exec, firefox"
         "$mod, Q, killactive"
         "$mod SHIFT, F, togglefloating"

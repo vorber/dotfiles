@@ -25,8 +25,6 @@
     dunst #or mako?
     libnotify
     swww
-    #rofi-wayland
-    wofi
     networkmanagerapplet
   ];
 
