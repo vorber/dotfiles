@@ -1,15 +1,10 @@
 { config, pkgs, lib, inputs, ... }:
+let
+  palette = config.colorScheme.palette;
+  betterTransition = "all 0.3s cubic-bezier(.55,-0.68,.48,1.682)";
+in
 {
   programs.waybar = 
-  let 
-    rofi-launcher = pkgs.writeShellScriptBin "rofi-launcher" ''
-      if pgrep -x "rofi" > /dev/null; then
-        # Rofi is running, kill it
-        pkill -x rofi
-        exit 0
-      fi
-      '';
-  in
   {
     enable = true;
 
@@ -17,16 +12,26 @@
       layer = "top";
       position = "top";
 
-      modules-left = ["custom/start" "hyprland/workspaces"];
-      modules-center = ["hyprland/window" "clock" "user"];
-      modules-right = ["pulseaudio" "tray" "custom/exit"];
+      modules-left = ["custom/start" "hyprland/window" "pulseaudio" "hyprland/submap"];
+      modules-center = ["hyprland/workspaces" "clock"];
+      modules-right = ["bluetooth" "custom/exit" "tray" ];
 #TODO: language
       "hyprland/workspaces" = {
-      	format = "{name}";#if bar-number == true then "{name}" else "{icon}";
+      	format = "{icon}";#if bar-number == true then "{name}" else "{icon}";
       	format-icons = {
-          default = " ";
-          active = " ";
-          urgent = " ";
+          default = "";
+          active = "";
+          urgent = "";
+            # "1": "󰲠",
+            # "2": "󰲢",
+            # "3": "󰲤",
+            # "4": "󰲦",
+            # "5": "󰲨",
+            # "6": "󰲪",
+            # "7": "󰲬",
+            # "8": "󰲮",
+            # "9": "󰲰",
+            # "10": "󰿬",
       	};
       	on-scroll-up = "hyprctl dispatch workspace e+1";
       	on-scroll-down = "hyprctl dispatch workspace e-1";
@@ -38,7 +43,7 @@
         tooltip-format = "<big>{:%A, %d.%B %Y }</big><tt><small>{calendar}</small></tt>";
       };
       "hyprland/window" = {
-      	max-length = 25;
+      	max-length = 50;
       	separate-outputs = false;
       };
       "tray" = {
@@ -66,13 +71,13 @@
       "custom/exit" = {
         tooltip = false;
         format = "";
-        on-click = "sleep 0.1 && wlogout";
+        #on-click = "sleep 0.1 && wlogout";
+        on-click = "pkill wofi || wofi-powermenu";
       };
       "custom/start" = {
         tooltip = false;
         format = " ";
-        # exec = "rofi -show drun";
-        on-click = "sleep 0.1 && {$rofi-launcher}/bin/start";
+        on-click = "pkill wofi || wofi -S drun";
       };
     }];
     style = ''
@@ -83,261 +88,147 @@
       }
        
       window#waybar {
-        background-color: rgba(43, 48, 59, 0.5);
-        border-bottom: 3px solid rgba(100, 114, 125, 0.5);
-        color: #ffffff;
+        background-color: rgba(26,27,38,0);
+        border-bottom: 1px solid rgba(26,27,38,0);
+        border-radius: 0px;
+        color: #${palette.base0F};
+
         transition-property: background-color;
         transition-duration: .5s;
       }
 
-      window#waybar.hidden {
-          opacity: 0.2;
+      #workspaces {
+        background: #${palette.base00};
+        margin: 5px;
+        padding: 0px 1px;
+        border-radius: 15px;
+        border: 0px;
+        font-style: normal;
+        color: #${palette.base00};
       }
 
-      button {
-          /* Use box-shadow instead of border so the text isn't offset */
-          box-shadow: inset 0 -3px transparent;
-          /* Avoid rounded borders under each button name */
-          border: none;
-          border-radius: 0;
+      #workspaces button {
+        padding: 0px 5px;
+        margin: 4px 3px;
+        border-radius: 15px;
+        border: 0px;
+        color: #${palette.base00};
+        background: linear-gradient(45deg, #${palette.base0C}, #${palette.base0D}, #${palette.base0E});
+        opacity: 0.5;
+        transition: ${betterTransition};
       }
 
-      /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-      button:hover {
-          background: inherit;
-          box-shadow: inset 0 -3px #ffffff;
+      #workspaces button.active {
+        padding: 0px 5px;
+        margin: 4px 3px;
+        border-radius: 15px;
+        border: 0px;
+        color: #${palette.base00};
+        background: linear-gradient(45deg, #${palette.base0D}, #${palette.base0E});
+        opacity: 1.0;
+        min-width: 40px;
+        transition: ${betterTransition};
       }
 
-#workspaces button {
-          padding: 0 5px;
-          background-color: transparent;
-          color: #ffffff;
+      #workspaces button:hover {
+        border-radius: 15px;
+        color: #${palette.base00};
+        background: linear-gradient(45deg, #${palette.base0D}, #${palette.base0E});
+        opacity: 0.8;
+        transition: ${betterTransition};
       }
 
-#workspaces button:hover {
-          background: rgba(0, 0, 0, 0.2);
+      @keyframes gradient_horizontal {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      @keyframes swiping {
+        0% {
+          background-position: 0% 200%;
+        }
+        100% {
+          background-position: 200% 200%;
+        }
       }
 
-#workspaces button.focused {
-          background-color: #64727D;
-          box-shadow: inset 0 -3px #ffffff;
+      tooltip {
+        background: #${palette.base00};
+        border: 1px solid #${palette.base0E};
+        border-radius: 10px;
+      }
+      tooltip label {
+        color: #${palette.base07};
       }
 
-#workspaces button.urgent {
-          background-color: #eb4d4b;
+      #window {
+        color: #${palette.base05};
+        background: #${palette.base00};
+        border-radius: 50px 15px 50px 15px;
+        margin: 5px;
+        padding: 2px 20px;
       }
 
-#mode {
-          background-color: #64727D;
-          box-shadow: inset 0 -3px #ffffff;
+      #clock {
+        color: #${palette.base0B};
+        background: #${palette.base00};
+        border-radius: 15px 50px 15px 50px;
+        margin: 5px;
+        padding: 2px 20px;
       }
 
-#clock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#network,
-#pulseaudio,
-#wireplumber,
-#custom-media,
-#tray,
-#mode,
-#idle_inhibitor,
-#scratchpad,
-#mpd {
-          padding: 0 10px;
-          color: #ffffff;
+      #network {
+        color: #${palette.base09};
+        background: #${palette.base00};
+        border-radius: 50px 15px 50px 15px;
+        margin: 5px;
+        padding: 2px 20px;
       }
 
-#window,
-#workspaces {
-          margin: 0 4px;
+      #custom-hyprbindings {
+        color: #${palette.base0E};
+        background: #${palette.base00};
+        border-radius: 15px 50px 15px 50px;
+        margin: 5px;
+        padding: 2px 20px;
       }
 
-      /* If workspaces is the leftmost module, omit left margin */
-      .modules-left > widget:first-child > #workspaces {
-          margin-left: 0;
+      #tray {
+        color: #${palette.base05};
+        background: #${palette.base00};
+        border-radius: 15px 0px 0px 50px;
+        margin: 5px 0px 5px 5px;
+        padding: 2px 20px;
       }
 
-      /* If workspaces is the rightmost module, omit right margin */
-      .modules-right > widget:last-child > #workspaces {
-          margin-right: 0;
+      #pulseaudio {
+        color: #${palette.base0D};
+        background: #${palette.base00};
+        border-radius: 50px 15px 50px 15px;
+        margin: 5px;
+        padding: 2px 20px;
       }
 
-#clock {
-          background-color: #64727D;
+      #custom-start {
+        color: #${palette.base03};
+        background: #${palette.base00};
+        border-radius: 0px 15px 50px 0px;
+        margin: 5px 5px 5px 0px;
+        padding: 2px 20px;
       }
 
-      @keyframes blink {
-          to {
-              background-color: #ffffff;
-              color: #000000;
-          }
-      }
-
-      label:focus {
-          background-color: #000000;
-      }
-
-#cpu {
-          background-color: #2ecc71;
-          color: #000000;
-      }
-
-#memory {
-          background-color: #9b59b6;
-      }
-
-#disk {
-          background-color: #964B00;
-      }
-
-#backlight {
-          background-color: #90b1b1;
-      }
-
-#network {
-          background-color: #2980b9;
-      }
-
-#network.disconnected {
-          background-color: #f53c3c;
-      }
-
-#pulseaudio {
-          background-color: #f1c40f;
-          color: #000000;
-      }
-
-#pulseaudio.muted {
-          background-color: #90b1b1;
-          color: #2a5c45;
-      }
-
-#wireplumber {
-          background-color: #fff0f5;
-          color: #000000;
-      }
-
-#wireplumber.muted {
-          background-color: #f53c3c;
-      }
-
-#custom-media {
-          background-color: #66cc99;
-          color: #2a5c45;
-          min-width: 100px;
-      }
-
-#custom-media.custom-spotify {
-          background-color: #66cc99;
-      }
-
-#custom-media.custom-vlc {
-          background-color: #ffa000;
-      }
-
-#temperature {
-          background-color: #f0932b;
-      }
-
-#temperature.critical {
-          background-color: #eb4d4b;
-      }
-
-#tray {
-          background-color: #2980b9;
-      }
-
-#tray > .passive {
-          -gtk-icon-effect: dim;
-      }
-
-#tray > .needs-attention {
-          -gtk-icon-effect: highlight;
-          background-color: #eb4d4b;
-      }
-
-#idle_inhibitor {
-          background-color: #2d3436;
-      }
-
-#idle_inhibitor.activated {
-          background-color: #ecf0f1;
-          color: #2d3436;
-      }
-
-#mpd {
-          background-color: #66cc99;
-          color: #2a5c45;
-      }
-
-#mpd.disconnected {
-          background-color: #f53c3c;
-      }
-
-#mpd.stopped {
-          background-color: #90b1b1;
-      }
-
-#mpd.paused {
-          background-color: #51a37a;
-      }
-
-#language {
-          background: #00b093;
-          color: #740864;
-          padding: 0 5px;
-          margin: 0 5px;
-          min-width: 16px;
-      }
-
-#keyboard-state {
-          background: #97e1ad;
-          color: #000000;
-          padding: 0 0px;
-          margin: 0 5px;
-          min-width: 16px;
-      }
-
-#keyboard-state > label {
-          padding: 0 5px;
-      }
-
-#keyboard-state > label.locked {
-          background: rgba(0, 0, 0, 0.2);
-      }
-
-#scratchpad {
-          background: rgba(0, 0, 0, 0.2);
-      }
-
-#scratchpad.empty {
-        background-color: transparent;
-      }
-
-#privacy {
-          padding: 0;
-      }
-
-#privacy-item {
-          padding: 0 5px;
-          color: white;
-      }
-
-#privacy-item.screenshare {
-          background-color: #cf5700;
-      }
-
-#privacy-item.audio-in {
-          background-color: #1ca000;
-      }
-
-#privacy-item.audio-out {
-          background-color: #0069d4;
+      #custom-exit {
+        color: #${palette.base0E};
+        background: #${palette.base00};
+        border-radius: 15px 0px 0px 50px;
+        margin: 5px 0px;
+        padding: 2px 5px 2px 15px;
       }
     '';
   };

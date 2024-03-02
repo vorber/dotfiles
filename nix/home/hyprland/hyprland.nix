@@ -34,6 +34,11 @@
         ",preferred,auto,1"
       ];
 
+      workspace = [
+        "1,monitor:desc:Ancor Communications Inc ASUS VS247 G8LMTF096313,default:true,persistent:true,on-created-empty:firefox"
+        "2,monitor:desc:LG Electronics LG HDR 4K 0x00006F1B,default:true,persistent:true,on-created-empty:wezterm"
+      ];
+
       general = {
         layout = "dwindle";
         border_size = 3;
@@ -90,11 +95,12 @@
       bind = [
         "$mod, T, exec, wezterm"
         "$mod, Return, exec, wezterm"
-        "$mod, D, exec, rofi -show drun"
+        "$mod, R, exec, wofi -S drun"
+        "$mod, G, exec, wofi -S drun"
         "$mod, B, exec, firefox"
         "$mod, Q, killactive"
         "$mod SHIFT, F, togglefloating"
-        "$mod CTRL, F, fullscreen, 0"
+        "$mod, F, fullscreen, 0"
         "$mod, P, togglesplit"
         "ALT, Tab, focuscurrentorlast"
         "$mod, Tab, cyclenext"

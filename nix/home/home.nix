@@ -1,6 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, inputs, lib, ... }:
 {
-  imports = [ ./programs ./fonts ./hyprland ];
+  imports = [ 
+    inputs.nix-colors.homeManagerModules.default
+    ./programs 
+    ./fonts 
+    ./hyprland ];
+  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
   nixpkgs.config.allowUnfreePredicate = (_: true);  
   # Home Manager needs a bit of information about you and the paths it should
   # manage.

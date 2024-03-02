@@ -13,6 +13,7 @@
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
     };
+    nix-colors.url = "github:misterio77/nix-colors";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
