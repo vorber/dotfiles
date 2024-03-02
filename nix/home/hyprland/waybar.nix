@@ -71,8 +71,8 @@ in
       "custom/exit" = {
         tooltip = false;
         format = "";
-        #on-click = "sleep 0.1 && wlogout";
-        on-click = "pkill wofi || wofi-powermenu";
+        on-click = "sleep 0.1 && wlogout";
+        #on-click = "pkill wofi || wofi-powermenu";
       };
       "custom/start" = {
         tooltip = false;
@@ -88,8 +88,8 @@ in
       }
        
       window#waybar {
-        background-color: rgba(26,27,38,0);
-        border-bottom: 1px solid rgba(26,27,38,0);
+        background: rgba(26,27,38,0.4);
+        border-bottom: 1px solid rgba(26,27,38,0.6);
         border-radius: 0px;
         color: #${palette.base0F};
 
@@ -175,6 +175,13 @@ in
         padding: 2px 20px;
       }
 
+      #bluetooth {
+        color: #${palette.base07};
+        background: #${palette.base00};
+        border-radius: 15px 50px 15px 50px;
+        margin: 5px;
+        padding: 2px 20px;
+      }
       #clock {
         color: #${palette.base0B};
         background: #${palette.base00};
@@ -216,7 +223,7 @@ in
       }
 
       #custom-start {
-        color: #${palette.base03};
+        color: #${palette.base0D};
         background: #${palette.base00};
         border-radius: 0px 15px 50px 0px;
         margin: 5px 5px 5px 0px;

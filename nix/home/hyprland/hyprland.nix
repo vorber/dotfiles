@@ -94,7 +94,7 @@
 
       bind = [
         "$mod, T, exec, wezterm"
-        "$mod, Return, exec, wezterm"
+        "$mod, Return, exec, wezterm -e tmux"
         "$mod, R, exec, wofi -S drun"
         "$mod, G, exec, wofi -S drun"
         "$mod, B, exec, firefox"

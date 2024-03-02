@@ -69,15 +69,37 @@ in {
         background-color: rgba(12, 12, 12, 0.5);
         border: 3px solid #${palette.base0E};
       }
-      #logout,
-      #suspend,
-      #shutdown,
-      #reboot,
-      #lock,
+    #logout {
+        margin: 10px;
+        border-radius: 20px;
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/logout.png"));
+      }
+      #suspend {
+        margin: 10px;
+        border-radius: 20px;
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/suspend.png"));
+      }
+      #shutdown {
+        margin: 10px;
+        border-radius: 20px;
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
+      }
+      #reboot {
+        margin: 10px;
+        border-radius: 20px;
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"));
+      }
+      #lock {
+        margin: 10px;
+        border-radius: 20px;
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/lock.png"));
+      }
       #hibernate {
         margin: 10px;
         border-radius: 20px;
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png"));
       }
+
     '';
   };
 }

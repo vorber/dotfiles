@@ -2,6 +2,7 @@
 {
   imports = [
       ./hyprland.nix
+      ./wlogout.nix
       ./waybar.nix
   ];
 }
