@@ -102,6 +102,12 @@
             "float,title:^(xdg-desktop-portal)(.*)$"
             "nofocus,title:^(.*)(mvi)$"
           ];
+
+      layerrule = [
+        "blur, ^(wlogout)"
+        "blur, gtk-layer-shell"
+      ];
+
       bind = [
         "$mod, T, exec, wezterm"
         "$mod, Return, exec, wezterm -e tmux"
