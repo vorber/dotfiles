@@ -5,6 +5,7 @@
       curl
       wget
       pass
+      tealdeer
     ];
 
     environment.variables.EDITOR = "nvim";

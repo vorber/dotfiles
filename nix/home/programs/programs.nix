@@ -7,6 +7,20 @@
       bat.enable = true;
       thefuck.enable = true;
       
+      eza = {
+        enable = true;
+        enableAliases = true;
+        extraOptions = [
+          "--group-directories-first"
+          "--header"
+          "--git"
+          "--icons"
+          "--classify"
+          "--time-style=long-iso"
+          "--group"
+          "--color-scale"
+        ];
+      };
       fzf = {
         enable = true;
         enableFishIntegration = true;

@@ -23,7 +23,7 @@
         plugin = inputs.tmux-sessionx.packages.${pkgs.system}.default;
         extraConfig = ''
             set -g @sessionx-zoxide-mode 'on'
-            set -g @sessionx-bind 'l'
+            set -g @sessionx-bind 'ctrl-l'
             set -g @sessionx-window-height '85%'
             set -g @sessionx-window-width '75%'
             set -g @sessionx-preview-location 'right'
@@ -32,12 +32,13 @@
 
             set -g @sessionx-bind-tree-mode 'ctrl-w'
             set -g @sessionx-bind-new-window 'ctrl-c'
-            set -g @sessionx-bind-kill-session 'ctrl-d'
+            set -g @sessionx-bind-kill-session 'ctrl-x'
         '';
       }      
     ];
     extraConfig = ''
       set -g status-position top
+      set -g @resurrect-strategy-nvim 'session'
     '';#TODO
     #TODO: misc shell scripts
   };
