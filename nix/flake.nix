@@ -53,6 +53,7 @@
             stateVersion = "23.11";
           };
       nixosFlake = "${user}-nixos";
+      wslFlake = "${user}-wsl";
     in {
       nixosConfigurations = {
         ${nixosFlake} = 
@@ -81,10 +82,10 @@
                 }
               ];
             };
-        wsl = 
+        ${wslFlake} = 
           let settings = {
             isNixOS = true;
-            flakeName = "wsl";
+            flakeName = "${wslFlake}";
             games.enable = false;
           };
           in
