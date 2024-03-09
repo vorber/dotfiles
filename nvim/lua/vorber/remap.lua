@@ -8,7 +8,7 @@ vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
 vim.keymap.set('', 'H', '^', {remap = false})
 vim.keymap.set('', 'L', '$', {remap = false})
 vim.keymap.set('n', 'n', 'nzz', {remap = false})
-vim.keymap.set('n', 'n', 'Nzz', {remap = false})
+vim.keymap.set('n', 'N', 'Nzz', {remap = false})
 --vim.keymap.set('n', '<S-CR>', 'O<Esc>')
 --  vim.keymap.set('n', '<enter>', 'o<Esc>')
 

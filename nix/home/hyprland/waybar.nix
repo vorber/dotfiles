@@ -14,24 +14,24 @@ in
 
       modules-left = ["custom/start" "hyprland/window" "pulseaudio" "hyprland/submap"];
       modules-center = ["hyprland/workspaces" "clock"];
-      modules-right = ["bluetooth" "custom/exit" "tray" ];
+      modules-right = ["bluetooth" "tray" "custom/exit" ];
 #TODO: language
       "hyprland/workspaces" = {
       	format = "{icon}";#if bar-number == true then "{name}" else "{icon}";
       	format-icons = {
-          default = "";
-          active = "";
-          urgent = "";
-            # "1": "󰲠",
-            # "2": "󰲢",
-            # "3": "󰲤",
-            # "4": "󰲦",
-            # "5": "󰲨",
-            # "6": "󰲪",
-            # "7": "󰲬",
-            # "8": "󰲮",
-            # "9": "󰲰",
-            # "10": "󰿬",
+          #default = "";
+          #active = "";
+          #urgent = "";
+          "1"= "󰲠";
+          "2"= "󰲢";
+          "3"= "󰲤";
+          "4"= "󰲦";
+          "5"= "󰲨";
+          "6"= "󰲪";
+          "7"= "󰲬";
+          "8"= "󰲮";
+          "9"= "󰲰";
+          "10"= "󰿬";
       	};
       	on-scroll-up = "hyprctl dispatch workspace e-1";
       	on-scroll-down = "hyprctl dispatch workspace e+1";
