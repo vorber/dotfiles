@@ -208,7 +208,7 @@ in
       #tray {
         color: #${palette.base05};
         background: #${palette.base00};
-        border-radius: 15px 0px 0px 50px;
+        border-radius: 15px 50px 15px 50px;
         margin: 5px 0px 5px 5px;
         padding: 2px 20px;
       }
