@@ -20,7 +20,8 @@
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;
     xwayland.enable = true;
   };
-
+#needed for swaylock to work, see https://nix-community.github.io/home-manager/options.xhtml#opt-programs.swaylock.enable
+  security.pam.services.swaylock = {};
   environment.systemPackages = with pkgs; [
     dunst #or mako?
     libnotify
