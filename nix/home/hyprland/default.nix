@@ -8,5 +8,6 @@ in
         (import ./hyprland.nix {inherit pkgs launcher;})
         (import ./waybar.nix {inherit pkgs config launcher;})
       ./wlogout.nix
+      (import ./lock/swaylock.nix {inherit pkgs config;})
   ];
 }

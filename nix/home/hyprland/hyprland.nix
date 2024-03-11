@@ -115,6 +115,7 @@
         "$mod, G, exec, ${launcher}"
         "$mod, B, exec, firefox"
         "$mod, Q, killactive"
+        "$mod, L, exec, swaylock --grace 0 --fade-in 0"
         "$mod SHIFT, F, togglefloating"
         "$mod, F, fullscreen, 0"
         "$mod, P, togglesplit"

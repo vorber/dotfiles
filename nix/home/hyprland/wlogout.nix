@@ -31,7 +31,7 @@ in {
       }
       {
         "label" = "lock";
-        "action" = "sleep 1; hyprlock";
+        "action" = "sleep 1; swaylock --grace 0";
         "text" = "Lock";
         "keybind" = "l";
       }
