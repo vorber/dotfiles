@@ -93,6 +93,7 @@
       };
       windowrule = [
             "float, ^(steam)$"
+            "workspace name:gamez, ^(steam)$"
             "tile,title:^(WPS)(.*)$"
             # Dialogs
             "float,title:^(Open File)(.*)$"
@@ -111,8 +112,9 @@
       bind = [
         "$mod, T, exec, wezterm"
         "$mod, Return, exec, wezterm -e tmux"
-        "$mod, R, exec, ${launcher}"
-        "$mod, G, exec, ${launcher}"
+        "$mod, R, exec, ${launcher.run}"
+        "$mod, G, exec, ${launcher.run}"
+        "$mod, P, exec, ${launcher.pass}"
         "$mod, B, exec, firefox"
         "$mod, Q, killactive"
         "$mod, L, exec, swaylock --grace 0 --fade-in 0"

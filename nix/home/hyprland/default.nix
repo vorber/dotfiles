@@ -1,6 +1,9 @@
 {config, pkgs, lib, ...}:
 let
-  launcher = "pkill wofi || wofi -S drun";
+  launcher = {
+    run = "pkill wofi || wofi -S drun";
+    pass = "wofi-pass";
+  };
 in
 {
   imports = [

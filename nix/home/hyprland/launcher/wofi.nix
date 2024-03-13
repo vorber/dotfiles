@@ -3,6 +3,10 @@ let
   palette = config.colorScheme.palette;
 in
 {
+  home.packages = [
+    pkgs.wofi-pass
+  ];
+
   programs.wofi = {
     enable = true;
     settings = {
