@@ -22,7 +22,10 @@
       '';
     in
     {
-      exec-once = ''${startupScript}/bin/start'';
+      exec-once = [
+        "${startupScript}/bin/start"
+        "[workspace 9 silent] telegram-desktop"
+        ];
 
       "$mod" = "SUPER";
 
@@ -92,8 +95,13 @@
         ];
       };
       windowrule = [
-            "float, ^(steam)$"
-            "workspace name:gamez, ^(steam)$"
+            #Steam
+            "workspace 10 silent, title:^(Steam)$"
+            "tile, title:^(Steam)$"
+            "stayfocused, title:^(?!.*Steam Settings)$, class:^(steam)$"
+            #Msg
+            "workspace 9 silent, title:^(Telegram)$"
+            #Misc
             "tile,title:^(WPS)(.*)$"
             # Dialogs
             "float,title:^(Open File)(.*)$"

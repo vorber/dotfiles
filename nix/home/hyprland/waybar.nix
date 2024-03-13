@@ -12,9 +12,21 @@ in
       layer = "top";
       position = "top";
 
-      modules-left = ["custom/start" "hyprland/window" "pulseaudio" "hyprland/submap"];
-      modules-center = ["hyprland/workspaces" "clock"];
-      modules-right = ["bluetooth" "tray" "custom/exit" ];
+      modules-left = [
+        "custom/start"
+        "hyprland/workspaces"
+        "hyprland/window"
+        "hyprland/submap"
+      ];
+      modules-center = [
+        "clock"
+      ];
+      modules-right = [
+        "bluetooth"
+        "pulseaudio" 
+        "tray"
+        "custom/exit"
+      ];
 #TODO: language
       "hyprland/workspaces" = {
       	format = "{icon}";#if bar-number == true then "{name}" else "{icon}";
@@ -22,16 +34,19 @@ in
           #default = "";
           #active = "";
           #urgent = "";
-          "1"= "󰲠";
-          "2"= "󰲢";
-          "3"= "󰲤";
+          "1"= "";
+          "2"= "";
+          "3"= "";
           "4"= "󰲦";
           "5"= "󰲨";
           "6"= "󰲪";
           "7"= "󰲬";
           "8"= "󰲮";
-          "9"= "󰲰";
-          "10"= "󰿬";
+          "9"= "";
+          "10"= "";
+          "urgent" = "󱨇";
+          "default" = "";
+          "empty" = "󱓼";
       	};
       	on-scroll-up = "hyprctl dispatch workspace e-1";
       	on-scroll-down = "hyprctl dispatch workspace e+1";
@@ -76,14 +91,15 @@ in
       "custom/start" = {
         tooltip = false;
         format = " ";
-        on-click = launcher;
+        on-click = launcher.run;
       };
     }];
     style = ''
       * {
-        font-size: 16px;
+        font-size: 13px;
         font-family: JetBrainsMono Nerd Font, Font Awesome, sans-serif;
         font-weight: bold;
+        min-height: 0;
       }
        
       window#waybar {
@@ -98,18 +114,20 @@ in
 
       #workspaces {
         background: #${palette.base00};
-        margin: 5px;
+        margin: 2px;
         padding: 0px 1px;
-        border-radius: 15px;
+        border-radius:16px;
         border: 0px;
         font-style: normal;
         color: #${palette.base00};
       }
-
+      #workspaces label {
+        padding-right: 4px
+      }
       #workspaces button {
-        padding: 0px 5px;
-        margin: 4px 3px;
-        border-radius: 15px;
+        margin: 4px 4px;
+        border-radius:16px;
+        padding: 0px 1px;
         border: 0px;
         color: #${palette.base00};
         background: linear-gradient(45deg, #${palette.base0C}, #${palette.base0D}, #${palette.base0E});
@@ -118,9 +136,8 @@ in
       }
 
       #workspaces button.active {
-        padding: 0px 5px;
-        margin: 4px 3px;
-        border-radius: 15px;
+        margin: 4px 4px;
+        border-radius:16px;
         border: 0px;
         color: #${palette.base00};
         background: linear-gradient(45deg, #${palette.base0D}, #${palette.base0E});
@@ -130,7 +147,7 @@ in
       }
 
       #workspaces button:hover {
-        border-radius: 15px;
+        border-radius:16px;
         color: #${palette.base00};
         background: linear-gradient(45deg, #${palette.base0D}, #${palette.base0E});
         opacity: 0.8;
@@ -160,7 +177,7 @@ in
       tooltip {
         background: #${palette.base00};
         border: 1px solid #${palette.base0E};
-        border-radius: 10px;
+        border-radius: 16px;
       }
       tooltip label {
         color: #${palette.base07};
@@ -169,71 +186,71 @@ in
       #window {
         color: #${palette.base05};
         background: #${palette.base00};
-        border-radius: 50px 15px 50px 15px;
-        margin: 5px;
+        border-radius: 30px 16px 30px 16px;
+        margin: 2px;
         padding: 2px 20px;
       }
 
       #bluetooth {
         color: #${palette.base07};
         background: #${palette.base00};
-        border-radius: 15px 50px 15px 50px;
-        margin: 5px;
+        border-radius:16px 30px 16px 30px;
+        margin: 2px;
         padding: 2px 20px;
       }
       #clock {
         color: #${palette.base0B};
         background: #${palette.base00};
-        border-radius: 15px 50px 15px 50px;
-        margin: 5px;
+        border-radius:16px 30px 16px 30px;
+        margin: 2px;
         padding: 2px 20px;
       }
 
       #network {
         color: #${palette.base09};
         background: #${palette.base00};
-        border-radius: 50px 15px 50px 15px;
-        margin: 5px;
+        border-radius: 30px 16px 30px 16px;
+        margin: 2px;
         padding: 2px 20px;
       }
 
       #custom-hyprbindings {
         color: #${palette.base0E};
         background: #${palette.base00};
-        border-radius: 15px 50px 15px 50px;
-        margin: 5px;
+        border-radius:16px 30px 16px 30px;
+        margin: 2px;
         padding: 2px 20px;
       }
 
       #tray {
         color: #${palette.base05};
         background: #${palette.base00};
-        border-radius: 15px 50px 15px 50px;
-        margin: 5px 0px 5px 5px;
+        border-radius:16px 30px 16px 30px;
+        margin: 2px 0px 2px 2px;
         padding: 2px 20px;
       }
 
       #pulseaudio {
         color: #${palette.base0D};
         background: #${palette.base00};
-        border-radius: 50px 15px 50px 15px;
-        margin: 5px;
+        border-radius: 30px 16px 30px 16px;
+        margin: 2px;
         padding: 2px 20px;
       }
 
       #custom-start {
         color: #${palette.base0D};
         background: #${palette.base00};
-        border-radius: 0px 15px 50px 0px;
-        margin: 5px 5px 5px 0px;
+        border-radius: 0px 16px 30px 0px;
+        margin: 2px 2px 2px 0px;
         padding: 2px 20px;
       }
 
       #custom-exit {
         color: #${palette.base0E};
         background: #${palette.base00};
-        border-radius: 15px 0px 0px 50px;
-        margin: 5px 0px;
+        border-radius:16px 0px 0px 30px;
+        margin: 2px 0px;
         padding: 2px 5px 2px 15px;
       }
     '';
