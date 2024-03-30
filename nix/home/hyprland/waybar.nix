@@ -125,7 +125,7 @@ in
         padding-right: 4px
       }
       #workspaces button {
-        margin: 4px 4px;
+        margin: 2px 2px;
         border-radius:16px;
         padding: 0px 1px;
         border: 0px;
@@ -136,7 +136,7 @@ in
       }
 
       #workspaces button.active {
-        margin: 4px 4px;
+        margin: 2px 2px;
         border-radius:16px;
         border: 0px;
         color: #${palette.base00};
@@ -251,7 +251,7 @@ in
         background: #${palette.base00};
         border-radius:16px 0px 0px 30px;
         margin: 2px 0px;
-        padding: 2px 5px 2px 15px;
+        padding: 2px 5px 2px 10px;
       }
     '';
   };
