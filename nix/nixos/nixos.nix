@@ -10,6 +10,7 @@
       ./vorber-nixos/hardware-configuration.nix
       ./config/gaming.nix
       ./config/DE.nix
+      ./config/wine.nix
     ];
   
   # Use the systemd-boot EFI boot loader.
@@ -32,6 +33,10 @@
     "/home".options = ["compress=zstd"];
     "/nix".options = ["compress=zstd" "noatime"];
     "/var/log".options = ["compress=zstd"];
+    "/run/media/vorber/SSD2" = {
+      device = "/dev/disk/by-uuid/81655dc2-bbac-438d-8c6c-bc5890ad8f38";
+      fsType = "ext4";
+    };
   };
 
   networking.hostName = "vorber-nixos"; # Define your hostname.
