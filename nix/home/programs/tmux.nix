@@ -28,7 +28,7 @@
         plugin = inputs.tmux-sessionx.packages.${pkgs.system}.default;
         extraConfig = ''
           set -g @sessionx-zoxide-mode 'on'
-          set -g @sessionx-bind 'ctrl-l'
+          set -g @sessionx-bind 'o'
           set -g @sessionx-window-height '85%'
           set -g @sessionx-window-width '75%'
           set -g @sessionx-preview-location 'right'
