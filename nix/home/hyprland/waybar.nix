@@ -93,6 +93,9 @@ in
         format = " ";
         on-click = launcher.run;
       };
+      "bluetooth" = {
+        format-disabled = "";
+      };
     }];
     style = ''
       * {
