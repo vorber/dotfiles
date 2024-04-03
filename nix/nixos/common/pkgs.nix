@@ -6,6 +6,7 @@
       wget
       pass
       tealdeer
+      killall
     ];
 
     environment.variables.EDITOR = "nvim";

@@ -122,7 +122,7 @@ in
 
       bind = [
         "$mod, T, exec, ${terminal}"
-        "$mod, Return, exec, ${terminal} -e tmux"
+        "$mod, Return, exec, ${terminal} -e tmux a"
         "$mod, R, exec, ${launcher.run}"
         "$mod, G, exec, ${launcher.run}"
         "$mod, P, exec, ${launcher.pass}"

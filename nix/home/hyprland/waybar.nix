@@ -53,7 +53,7 @@ in
       };
 
       "clock" = {
-        format = ''{: %H:%M}'';
+        format = '' {:%H:%M}'';
       	tooltip = true;
         tooltip-format = "<big>{:%A, %d.%B %Y }</big><tt><small>{calendar}</small></tt>";
       };
