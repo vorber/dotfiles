@@ -48,8 +48,8 @@ in
           "default" = "";
           "empty" = "󱓼";
       	};
-      	on-scroll-up = "hyprctl dispatch workspace e-1";
-      	on-scroll-down = "hyprctl dispatch workspace e+1";
+      	on-scroll-up = "hyprctl dispatch workspace r-1";
+      	on-scroll-down = "hyprctl dispatch workspace r+1";
       };
 
       "clock" = {
