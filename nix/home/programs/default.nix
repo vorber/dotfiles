@@ -6,6 +6,6 @@
     ./games.nix
     ./nvim
     ./tmux.nix
-    ./term/wezterm.nix
+    ./term/alacritty.nix
   ];
 }

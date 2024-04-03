@@ -16,7 +16,7 @@ in
       allow_images = true;
       image_size = 22;
       gtk_dark = true;
-      terminal = "${pkgs.wezterm}/bin/wezterm";
+      terminal = "${pkgs.alacritty}/bin/alacritty";
       key_expand = "Tab";
       run-always_parse_args = true;
       normal_window = false;

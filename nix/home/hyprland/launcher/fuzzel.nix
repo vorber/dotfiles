@@ -7,7 +7,7 @@ in
     enable = true;
     settings = {
       main = {
-        terminal = "${pkgs.wezterm}/bin/wezterm";
+        terminal = "${pkgs.alacritty}/bin/alacritty";
         layer = "overlay";
         font = "MesloLGMNerdFontMono:size=14";
         dpi-aware = "yes";

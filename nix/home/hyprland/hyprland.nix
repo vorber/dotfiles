@@ -1,4 +1,7 @@
 { pkgs, launcher, ... }:
+let
+  terminal = "alacritty";
+in
 {
   home.packages = [pkgs.variety];
   wayland.windowManager.hyprland = {
@@ -39,7 +42,7 @@
 
       workspace = [
         "1,monitor:desc:Ancor Communications Inc ASUS VS247 G8LMTF096313,default:true,persistent:true,on-created-empty:firefox"
-        "2,monitor:desc:LG Electronics LG HDR 4K 0x00006F1B,default:true,persistent:true,on-created-empty:wezterm"
+        "2,monitor:desc:LG Electronics LG HDR 4K 0x00006F1B,default:true,persistent:true,on-created-empty:${terminal}"
       ];
 
       general = {
@@ -118,8 +121,8 @@
       ];
 
       bind = [
-        "$mod, T, exec, wezterm"
-        "$mod, Return, exec, wezterm -e tmux"
+        "$mod, T, exec, ${terminal}"
+        "$mod, Return, exec, ${terminal} -e tmux"
         "$mod, R, exec, ${launcher.run}"
         "$mod, G, exec, ${launcher.run}"
         "$mod, P, exec, ${launcher.pass}"
