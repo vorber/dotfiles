@@ -13,20 +13,26 @@
       ./config/wine.nix
     ];
   
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = ["amdgpu"];
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [
+      "amdgpu.vm_update_mode=3"
+     # "radeon.dpm=1"
+    ];
+    # Use the systemd-boot EFI boot loader.
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    initrd.kernelModules = ["amdgpu"];
+    supportedFilesystems = [ "ntfs" ];
 
-  boot.binfmt.registrations.appimage = {
-    wrapInterpreterInShell = false;
-    interpreter = "${pkgs.appimage-run}/bin/appimage-run";
-    recognitionType = "magic";
-    offset = 0;
-    mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
-    magicOrExtension = ''\x7fELF....AI\x02'';
+    binfmt.registrations.appimage = {
+      wrapInterpreterInShell = false;
+      interpreter = "${pkgs.appimage-run}/bin/appimage-run";
+      recognitionType = "magic";
+      offset = 0;
+      mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
+      magicOrExtension = ''\x7fELF....AI\x02'';
+    };
   };
 
   fileSystems = {
@@ -87,6 +93,17 @@
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true; # This is already enabled by default
   hardware.opengl.driSupport32Bit = true; # For 32 bit applications
+
+#  hardware.opengl.extraPackages = with pkgs; [
+#  amdvlk
+#  ];
+## For 32 bit applications 
+#  hardware.opengl.extraPackages32 = with pkgs; [
+#    driversi686Linux.amdvlk
+#  ];
+#
+## Force radv, comment out for amdvlk
+#  environment.variables.AMD_VULKAN_ICD = "RADV";
 
   hardware.bluetooth = {
     enable = true;
