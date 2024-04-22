@@ -90,7 +90,7 @@ in
       };
       "custom/start" = {
         tooltip = false;
-        format = " ";
+        format = " ";
         on-click = launcher.run;
       };
       "bluetooth" = {

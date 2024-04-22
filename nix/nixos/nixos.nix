@@ -13,6 +13,7 @@
       ./config/wine.nix
     ];
   
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -60,8 +61,11 @@
   services = {
     udev.packages = with pkgs; [
       bazecor
+      game-devices-udev-rules
     ];
   };
+
+  hardware.uinput.enable = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
