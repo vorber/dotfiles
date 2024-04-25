@@ -88,6 +88,9 @@
     jack.enable = true;
   };
   hardware.pulseaudio.enable = false;
+  environment.systemPackages = [
+    pkgs.pavucontrol
+  ];
 
   #vulkan
   hardware.opengl.enable = true;
