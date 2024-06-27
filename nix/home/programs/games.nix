@@ -17,6 +17,8 @@ with lib;
   config = mkIf cfg.enable {
     home.packages = with pkgs;[
       steam
+      scanmem
+      steamtinkerlaunch
     ];
   };
 }

@@ -3,7 +3,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -154,7 +154,27 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
+  services = {
+    syncthing = {
+      inherit user;
+      enable = true;
+      dataDir = "/home/${user}/sync";
+      configDir = "/home/${user}/sync/.config/syncthing";
+      overrideDevices = true;     # overrides any devices added or deleted through the WebUI
+      overrideFolders = true;     # overrides any folders added or deleted through the WebUI
+      settings = {
+        devices = {
+          "phone" = { id = "RKHNAH7-Q6TOFMD-Y7U3EPG-OHWYNGO-UDM4AKF-RW2FUR3-MTXCA6G-ZNV3KAV"; };
+        };
+        folders = {
+          "phone" = {         # Name of folder in Syncthing, also the folder ID
+            path = "/home/${user}/sync/phone";    # Which folder to add to Syncthing
+            devices = [ "phone" ];      # Which devices to share the folder with
+          };
+        };
+      };
+    };
+  };
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.

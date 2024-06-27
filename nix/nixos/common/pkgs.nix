@@ -5,6 +5,7 @@
       curl
       wget
       pass
+      keepassxc
       tealdeer
       killall
     ];
