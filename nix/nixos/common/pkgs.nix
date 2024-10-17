@@ -8,6 +8,8 @@
       keepassxc
       tealdeer
       killall
+      jq
+      lz4
     ];
 
     environment.variables.EDITOR = "nvim";

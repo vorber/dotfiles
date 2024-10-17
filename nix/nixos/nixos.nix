@@ -64,6 +64,11 @@
     useXkbConfig = true; # use xkb.options in tty.
   };
 
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
+
   services = {
     udev.packages = with pkgs; [
       bazecor
@@ -72,6 +77,12 @@
   };
 
   hardware.uinput.enable = true;
+  
+  services.jellyfin = {
+      enable = true;
+      openFirewall = true;
+      user="vorber";
+  };
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -90,12 +101,12 @@
   hardware.pulseaudio.enable = false;
   environment.systemPackages = [
     pkgs.pavucontrol
+    pkgs.distrobox
   ];
 
   #vulkan
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true; # This is already enabled by default
-  hardware.opengl.driSupport32Bit = true; # For 32 bit applications
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true; # For 32 bit applications
 
 #  hardware.opengl.extraPackages = with pkgs; [
 #  amdvlk
@@ -164,7 +175,8 @@
       overrideFolders = true;     # overrides any folders added or deleted through the WebUI
       settings = {
         devices = {
-          "phone" = { id = "RKHNAH7-Q6TOFMD-Y7U3EPG-OHWYNGO-UDM4AKF-RW2FUR3-MTXCA6G-ZNV3KAV"; };
+          #"phone" = { id = "RKHNAH7-Q6TOFMD-Y7U3EPG-OHWYNGO-UDM4AKF-RW2FUR3-MTXCA6G-ZNV3KAV"; };
+          "phone" = { id = "JUDDPME-CSPQU6P-YLIHDDU-PD7U4X3-6OYVOPH-WXCA6N6-4CIMDUE-254EHAT"; };
         };
         folders = {
           "phone" = {         # Name of folder in Syncthing, also the folder ID

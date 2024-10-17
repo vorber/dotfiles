@@ -31,7 +31,7 @@ in
       "hyprland/workspaces" = {
       	format = "{icon}";#if bar-number == true then "{name}" else "{icon}";
       	format-icons = {
-          #default = "";
+          #default = "";  
           #active = "";
           #urgent = "";
           "1"= "";
@@ -48,6 +48,7 @@ in
           "default" = "";
           "empty" = "󱓼";
       	};
+        special-visible-only = true;
       	on-scroll-up = "hyprctl dispatch workspace r-1";
       	on-scroll-down = "hyprctl dispatch workspace r+1";
       };
@@ -58,8 +59,10 @@ in
         tooltip-format = "<big>{:%A, %d.%B %Y }</big><tt><small>{calendar}</small></tt>";
       };
       "hyprland/window" = {
-      	max-length = 50;
-      	separate-outputs = false;
+      	max-length = 80;
+      	separate-outputs = true;
+        icon = true;
+        icon-size = 16;
       };
       "tray" = {
         spacing = 12;

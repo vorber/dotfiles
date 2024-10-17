@@ -42,7 +42,8 @@ in
 
       workspace = [
         "1,monitor:desc:Ancor Communications Inc ASUS VS247 G8LMTF096313,default:true,persistent:true,on-created-empty:firefox"
-        "2,monitor:desc:LG Electronics LG HDR 4K 0x00006F1B,default:true,persistent:true,on-created-empty:${terminal}"
+        "2,monitor:desc:LG Electronics LG HDR 4K 0x00006F1B,default:true,persistent:true,on-created-empty:${terminal} -e tmux a"
+        "special:pass,on-created-empty:KeePassXC, persistent:true"
       ];
 
       general = {
@@ -97,23 +98,29 @@ in
           "workspaces, 1, 6, default"
         ];
       };
+
       windowrule = [
-            #Steam
-            "workspace 10 silent, title:^(Steam)$"
-            "tile, title:^(Steam)$"
-            "stayfocused, title:^(?!.*Steam Settings)$, class:^(steam)$"
-            #Msg
-            "workspace 9 silent, title:^(Telegram)$"
-            #Misc
-            "tile,title:^(WPS)(.*)$"
-            # Dialogs
-            "float,title:^(Open File)(.*)$"
-            "float,title:^(Open Folder)(.*)$"
-            "float,title:^(Save As)(.*)$"
-            "float,title:^(Library)(.*)$"
-            "float,title:^(xdg-desktop-portal)(.*)$"
-            "nofocus,title:^(.*)(mvi)$"
-          ];
+        #Misc
+        "tile,title:^(WPS)(.*)$"
+        # Dialogs
+        "float,title:^(Open File)(.*)$"
+        "float,title:^(Open Folder)(.*)$"
+        "float,title:^(Save As)(.*)$"
+        "float,title:^(Library)(.*)$"
+        "float,title:^(xdg-desktop-portal)(.*)$"
+        "nofocus,title:^(.*)(mvi)$"
+      ];
+      windowrulev2 = [
+        #KeePassXC
+        "workspace special:pass silent, class:^org.keepassxc.KeePassXC$"
+        "float, class:^org.keepassxc.KeePassXC$"
+        #Steam
+        "workspace 10 silent, class:^(steam)$"
+        "tile, class:^(steam)$"
+        "stayfocused, title:^(?!.*Steam Settings)$, class:^(steam)$"
+        #Msg
+        "workspace 9 silent, class:^(org.telegram.desktop)$"
+      ];
 
       layerrule = [
         "blur, ^(wlogout)"
@@ -165,6 +172,7 @@ in
         "$mod SHIFT, 0, movetoworkspace, 10"
         ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        "bind = SUPER_CONTROL, K, togglespecialworkspace, pass"
 
       ];
       bindm = [
