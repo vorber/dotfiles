@@ -44,6 +44,10 @@
       device = "/dev/disk/by-uuid/81655dc2-bbac-438d-8c6c-bc5890ad8f38";
       fsType = "ext4";
     };
+    "/run/media/vorber/4tb" = {
+      device = "/dev/disk/by-uuid/180b3946-5670-4ff2-b531-a0d2c8ad9330";
+      fsType = "ext4";
+    };
   };
 
   networking.hostName = "vorber-nixos"; # Define your hostname.
@@ -84,6 +88,8 @@
       user="vorber";
   };
 
+  services.flatpak.enable = true;
+
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
@@ -118,7 +124,7 @@
 #
 ## Force radv, comment out for amdvlk
 #  environment.variables.AMD_VULKAN_ICD = "RADV";
-
+  services.blueman.enable = true;
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;

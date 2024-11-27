@@ -1,3 +1,4 @@
+table.unpack = table.unpack or unpack
 return
 {
     "nvim-treesitter/nvim-treesitter",
@@ -8,7 +9,19 @@ return
         local configs = require("nvim-treesitter.configs")
 
         configs.setup({
-            ensure_installed = { "c", "c_sharp", "lua", "vim", "vimdoc", "javascript", "html", "bash", "nix", "toml"},
+            ensure_installed = { 
+                    "c",
+                    "c_sharp",
+                    "lua",
+                    "vim",
+                    "vimdoc",
+                    "javascript",
+                    "html",
+                    "bash",
+                    "nix",
+                    "toml",
+                    table.unpack(additional_treesitter_languages or {})
+                },
             sync_install = false,
             auto_install = true,
             highlight = { enable = true },

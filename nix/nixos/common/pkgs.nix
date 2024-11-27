@@ -10,6 +10,7 @@
       killall
       jq
       lz4
+      lact
     ];
 
     environment.variables.EDITOR = "nvim";

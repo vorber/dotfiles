@@ -28,6 +28,7 @@ in
       exec-once = [
         "${startupScript}/bin/start"
         "[workspace 9 silent] telegram-desktop"
+        "blueman-applet"
         ];
 
       "$mod" = "SUPER";

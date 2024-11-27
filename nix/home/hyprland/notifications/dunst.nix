@@ -2,7 +2,8 @@
 let
   palette = config.colorScheme.palette;
 in {
-  programs.dunst = {
+  services.dunst = {
+    enable = true;
     
     iconTheme = {
       package = pkgs.papirus-icon-theme;
@@ -11,7 +12,7 @@ in {
 
     settings = {
       global = {
-        follow = "keyboard";
+        follow = "none";
         width = 370;
         separator_height = 1;
         padding = 24;
@@ -26,19 +27,28 @@ in {
         markup = "full";
         min_icon_size = 32;
         max_icon_size = 128;
-        highlight = palette.base03;
+        frame_color = "#${palette.base0D}";
+        separator_color = "frame";
+        corner_radius = 10;
+        #highlight = "#${palette.base03}";
       };
 
       urgency_low = {
-        foreground = palette.base0A;
-        frame_color = palette.base02;
+        foreground = "#${palette.base05}";
+        background = "#${palette.base00}";
+        #frame_color = "#${palette.base02}";
       };
 
-      urgency_normal.frame_color = palette.base02;
+      urgency_normal = {
+        #frame_color = "#${palette.base02}";
+        foreground = "#${palette.base05}";
+        background = "#${palette.base00}";
+      };
 
       urgency_critical = {
-        foreground = palette.base08;
-        frame_color = palette.base02;
+        foreground = "#${palette.base05}";
+        background = "#${palette.base00}";
+        frame_color = "#${palette.base09}";
       };
     };
   };

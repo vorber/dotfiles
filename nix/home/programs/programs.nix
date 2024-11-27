@@ -38,7 +38,6 @@
 
       starship = {
         enable = true;
-        enableFishIntegration = true;
         enableBashIntegration = true;
         enableZshIntegration = true;
         settings = pkgs.lib.importTOML ../../../starship.toml;
