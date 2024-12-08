@@ -1,21 +1,33 @@
 {pkgs, ...}: {
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    (nerdfonts.override {
-      fonts = [
-        "DejaVuSansMono"
-        "FiraCode"
-        "FiraMono"
-        "Hack"
-        "Iosevka"
-        "JetBrainsMono"
-        "LiberationMono"
-        "Noto"
-        "RobotoMono"
-        "SourceCodePro"
-        "UbuntuMono"
-      ];
-    })
+    material-symbols
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
+    nerd-fonts.hack
+    nerd-fonts.iosevka
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.noto
+    nerd-fonts.roboto-mono
+    nerd-fonts.sauce-code-pro
+    nerd-fonts.ubuntu-mono
+
+
+#     (nerdfonts.override {
+#       fonts = [
+#         "DejaVuSansMono"
+#         "FiraCode"
+#         "FiraMono"
+#         "Hack"
+#         "Iosevka"
+#         "JetBrainsMono"
+#         "LiberationMono"
+#         "Noto"
+#         "RobotoMono"
+#         "SourceCodePro"
+#         "UbuntuMono"
+#       ];
+#     })
     cascadia-code
     corefonts
     fira-code
@@ -34,6 +46,6 @@
     font-awesome
     meslo-lg
     meslo-lgs-nf
-#TODO: meslo?
+# #TODO: meslo?
   ];
 }

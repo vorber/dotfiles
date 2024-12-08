@@ -133,6 +133,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  programs.ssh.startAgent = true;
   programs.gnupg.agent.enable = true;
   programs.firefox.enable = true;
   programs.firefox.nativeMessagingHosts.packages = [pkgs.passff-host];

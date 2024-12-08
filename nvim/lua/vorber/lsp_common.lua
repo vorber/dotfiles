@@ -1,5 +1,4 @@
 local on_attach = function(_, bufnr)
-    vim.print("attaching:", bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     local nmap = function(mode, keys, func, desc)
@@ -36,7 +35,6 @@ local on_attach = function(_, bufnr)
     end, {
         bang = true,
     })
-    vim.print("attached:", bufnr)
 end
 
 local get_capabilities = function()
