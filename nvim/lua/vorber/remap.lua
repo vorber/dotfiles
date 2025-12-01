@@ -52,3 +52,10 @@ vim.keymap.set("n", "<leader>f", function ()
 end)
 
 vim.keymap.set("n", "<leader>ft", ":Neotree toggle filesystem reveal left<CR>")
+
+-- diagnostics
+vim.keymap.set('n', "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set('n', "<leader>q", vim.diagnostic.setloclist)
+vim.keymap.set('n', "]d", vim.diagnostic.goto_next)
+vim.keymap.set('n', "[d", vim.diagnostic.goto_prev)
+
