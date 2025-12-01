@@ -1,5 +1,6 @@
 require("plugins")
 require("vorber")
+require("lsp")
 
 -- bootstrap lazy.nvim - the plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
