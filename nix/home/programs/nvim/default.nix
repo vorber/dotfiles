@@ -13,7 +13,7 @@
     xdg.configFile = {
       "nvim/lua".source = ../../../../nvim/lua;
       "nvim/after".source = ../../../../nvim/after;
-      "nvim/ftplugin".source = ../../../../nvim/ftplugin;
+      "nvim/after/ftplugin".source = ../../../../nvim/after/ftplugin;
       "nvim/init.lua".source = ../../../../nvim/init.lua;
 #      nvim = {
 #        source = 
