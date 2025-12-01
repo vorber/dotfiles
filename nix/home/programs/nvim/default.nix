@@ -14,6 +14,7 @@
       "nvim/lua".source = ../../../../nvim/lua;
       "nvim/after".source = ../../../../nvim/after;
       "nvim/after/ftplugin".source = ../../../../nvim/after/ftplugin;
+      "nvim/lsp/init.lua".source = ../../../../nvim/lsp/init.lua;
       "nvim/init.lua".source = ../../../../nvim/init.lua;
 #      nvim = {
 #        source = 
