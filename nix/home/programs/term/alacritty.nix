@@ -15,7 +15,7 @@ in
       };
       scrolling.history = 100000;
       font = {
-        normal.family = "FiraCode Nerd Font";
+        normal.family = "JetBrainsMono Nerd Font";#"Meslo LGS NF";
         bold = { style = "Bold"; };
         size = 11;
       };

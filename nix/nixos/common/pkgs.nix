@@ -11,6 +11,7 @@
       jq
       lz4
       lact
+      teamviewer
     ];
 
     environment.variables.EDITOR = "nvim";

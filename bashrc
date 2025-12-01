@@ -202,5 +202,3 @@ else
     export PATH=$PATH:$HOME/.dotnet
 fi
 
-
-eval "$(thefuck --alias)"

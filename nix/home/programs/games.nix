@@ -19,6 +19,7 @@ with lib;
       steam
       scanmem
       steamtinkerlaunch
+      #lutris
     ];
   };
 }

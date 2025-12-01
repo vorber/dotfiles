@@ -27,7 +27,7 @@
     git
     bat
     starship
-    thefuck
+    pay-respects
     bashInteractive
     vlc
     ffmpeg
@@ -84,4 +84,10 @@
 #  programs = import ./programs/programs.nix {
 #    inherit config pkgs lib;
 #  };
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.volantes-cursors;
+    name = "volantes_cursors";
+    size = 24;
+  };
 }

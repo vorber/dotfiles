@@ -79,7 +79,7 @@
       game-devices-udev-rules
     ];
   };
-
+  services.teamviewer.enable = true;
   hardware.uinput.enable = true;
   
   services.jellyfin = {
@@ -104,15 +104,19 @@
     # If you want to use JACK applications, uncomment this
     jack.enable = true;
   };
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
+
   environment.systemPackages = [
     pkgs.pavucontrol
     pkgs.distrobox
+    pkgs.lact
   ];
 
   #vulkan
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true; # For 32 bit applications
+  systemd.packages = [ pkgs.lact ];
+  systemd.services.lactd.wantedBy = ["multi-user.target"];
 
 #  hardware.opengl.extraPackages = with pkgs; [
 #  amdvlk
@@ -133,7 +137,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  programs.ssh.startAgent = true;
+  # todo: restore when gnome is removed programs.ssh.startAgent = true;
   programs.gnupg.agent.enable = true;
   programs.firefox.enable = true;
   programs.firefox.nativeMessagingHosts.packages = [pkgs.passff-host];
@@ -141,7 +145,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vorber = {
     packages = with pkgs; [
-      pinentry
+      pinentry-curses
       tree
     ];
   };
@@ -194,6 +198,31 @@
       };
     };
   };
+
+  services.printing = {
+    enable = true;
+    drivers = [ 
+      pkgs.canon-cups-ufr2 
+      pkgs.cnijfilter_4_00
+    ];
+  };
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  services.openssh = {
+  enable = true;
+  ports = [ 22 ];
+  settings = {
+    PasswordAuthentication = true;
+    AllowUsers = [ "vorber" ]; # Allows all users by default. Can be [ "user1" "user2" ]
+    UseDns = true;
+    X11Forwarding = false;
+    PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+  };
+};
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.

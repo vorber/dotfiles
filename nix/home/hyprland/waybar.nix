@@ -103,7 +103,7 @@ in
     style = ''
       * {
         font-size: 13px;
-        font-family: JetBrainsMono Nerd Font, Font Awesome, sans-serif;
+        font-family: Font Awesome, JetBrainsMono Nerd Font, sans-serif;
         font-weight: bold;
         min-height: 0;
       }

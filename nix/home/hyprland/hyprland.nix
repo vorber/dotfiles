@@ -17,7 +17,7 @@ in
     let
       startupScript = pkgs.writeShellScriptBin "start" ''
         ${pkgs.waybar}/bin/waybar &
-        ${pkgs.swww}/bin/swww init &
+        ${pkgs.swww}/bin/swww-daemon &
     
         sleep 1
     
@@ -26,6 +26,8 @@ in
     in
     {
       exec-once = [
+        #TODO: pass cursor theme with global config
+        "gsettings set org.gnome.desktop.interface cursor-theme 'volantes_cursors'"
         "${startupScript}/bin/start"
         "[workspace 9 silent] telegram-desktop"
         "blueman-applet"
@@ -36,15 +38,20 @@ in
       monitor = [
 #LG Electronics LG HDR 4K 0x00006F1B
 #Ancor Communications Inc ASUS VS247 G8LMTF096313
-        "desc:Ancor Communications Inc ASUS VS247 G8LMTF096313, preferred, 0x240, 1"
-        "desc:LG Electronics LG HDR 4K 0x00006F1B, preferred, 1920x0, 2"
+          #"desc:Ancor Communications Inc ASUS VS247 G8LMTF096313, preferred, 0x240, 1"
+        "desc:Samsung Electric Company Odyssey G80SD H1AK500000, preferred,1920x0, 2"
+        "desc:LG Electronics LG HDR 4K 0x00006F1B, preferred, 0x0, 2"
         ",preferred,auto,1"
       ];
 
       workspace = [
-        "1,monitor:desc:Ancor Communications Inc ASUS VS247 G8LMTF096313,default:true,persistent:true,on-created-empty:firefox"
+        # "1,monitor:desc:Ancor Communications Inc ASUS VS247 G8LMTF096313,default:true,persistent:true,on-created-empty:firefox"
+        "1,monitor:desc:Samsung Electric Company Odyssey G80SD H1AK500000,default:true,persistent:true,on-created-empty:firefox"
+        "9,monitor:desc:Samsung Electric Company Odyssey G80SD H1AK500000,default:true,persistent:true,on-created-empty:telegram-desktop"
         "2,monitor:desc:LG Electronics LG HDR 4K 0x00006F1B,default:true,persistent:true,on-created-empty:${terminal} -e tmux a"
         "special:pass,on-created-empty:KeePassXC, persistent:true"
+        "w[tv1], gapsout:0, gapsin:0"
+        "f[1], gapsout:0, gapsin:0"
       ];
 
       general = {
@@ -65,14 +72,16 @@ in
       dwindle = {
         pseudotile = "yes";
         preserve_split = "yes";
-        no_gaps_when_only = "yes";
+          #TODO:figure out
+        # no_gaps_when_only = "yes";
       };
 
       decoration = {
-        drop_shadow = "yes";
-        shadow_range = 8;
-        shadow_render_power = 2;
-        "col.shadow" = "rgba(00000044)";
+          #TODO: figure out
+        # drop_shadow = "yes";
+        # shadow_range = 8;
+        # shadow_render_power = 2;
+        # "col.shadow" = "rgba(00000044)";
 
         dim_inactive = false;
 
@@ -110,6 +119,7 @@ in
         "float,title:^(Library)(.*)$"
         "float,title:^(xdg-desktop-portal)(.*)$"
         "nofocus,title:^(.*)(mvi)$"
+        "float,title:^(Exiled Exchange 2)$"
       ];
       windowrulev2 = [
         #KeePassXC
@@ -121,6 +131,11 @@ in
         "stayfocused, title:^(?!.*Steam Settings)$, class:^(steam)$"
         #Msg
         "workspace 9 silent, class:^(org.telegram.desktop)$"
+        #no border when single
+        "bordersize 0, floating:0, onworkspace:w[tv1]"
+        "rounding 0, floating:0, onworkspace:w[tv1]"
+        "bordersize 0, floating:0, onworkspace:f[1]"
+        "rounding 0, floating:0, onworkspace:f[1]"
       ];
 
       layerrule = [
@@ -133,7 +148,6 @@ in
         "$mod, Return, exec, ${terminal} -e tmux a"
         "$mod, R, exec, ${launcher.run}"
         "$mod, G, exec, ${launcher.run}"
-        "$mod, P, exec, ${launcher.pass}"
         "$mod, B, exec, firefox"
         "$mod, Q, killactive"
         "$mod, L, exec, swaylock --grace 0 --fade-in 0"
@@ -147,6 +161,8 @@ in
         "$mod, mouse_up, workspace, e+1"
         "$mod SHIFT, left, workspace, e-1"
         "$mod SHIFT, right, workspace, e+1"
+        "$mod SHIFT, X, movewindow, mon:+1"
+        "$mod, X, swapactiveworkspaces, current +1"
         "$mod, left, movefocus, l"
         "$mod, right, movefocus, r"
         "$mod, up, movefocus, u"
