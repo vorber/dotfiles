@@ -1,6 +1,14 @@
 require("plugins")
 require("vorber")
-require("lsp")
+--todo: find a better place
+vim.g['fsharp#fsautocomplete_command'] = {
+  'dotnet',
+  'fsautocomplete',
+  '--background-service-enabled'
+}
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('nil_ls')
+
 
 -- bootstrap lazy.nvim - the plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

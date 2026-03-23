@@ -45,6 +45,7 @@
 
         git = {
           enable = true;
+          signing.format = "openpgp";
           settings = {
             user.name = "vorber";
             user.email = "vorber@gmail.com";

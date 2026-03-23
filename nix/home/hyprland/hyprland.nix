@@ -111,36 +111,30 @@ in
 
       windowrule = [
         #Misc
-        "tile,title:^(WPS)(.*)$"
+        "match:title ^(WPS)(.*)$, tile on"
         # Dialogs
-        "float,title:^(Open File)(.*)$"
-        "float,title:^(Open Folder)(.*)$"
-        "float,title:^(Save As)(.*)$"
-        "float,title:^(Library)(.*)$"
-        "float,title:^(xdg-desktop-portal)(.*)$"
-        "nofocus,title:^(.*)(mvi)$"
-        "float,title:^(Exiled Exchange 2)$"
-      ];
-      windowrulev2 = [
-        #KeePassXC
-        "workspace special:pass silent, class:^org.keepassxc.KeePassXC$"
-        "float, class:^org.keepassxc.KeePassXC$"
-        #Steam
-        "workspace 10 silent, class:^(steam)$"
-        "tile, class:^(steam)$"
-        "stayfocused, title:^(?!.*Steam Settings)$, class:^(steam)$"
-        #Msg
-        "workspace 9 silent, class:^(org.telegram.desktop)$"
-        #no border when single
-        "bordersize 0, floating:0, onworkspace:w[tv1]"
-        "rounding 0, floating:0, onworkspace:w[tv1]"
-        "bordersize 0, floating:0, onworkspace:f[1]"
-        "rounding 0, floating:0, onworkspace:f[1]"
+        "float on, match:modal true"
+        # "float on, match:title ^(Open File)(.*)$"
+        # "float on, match:title ^(Open Folder)(.*)$"
+        # "float on, match:title ^(Save As)(.*)$"
+        "float on, match:title ^(Library)(.*)$"
+        "float on, match:title ^(xdg-desktop-portal)(.*)$"
+        "no_focus on, match:title ^(.*)(mvi)$"
+        "float on, match:title ^(Exiled Exchange 2)$"
+        "float on, match:class ^org.keepassxc.KeePassXC$"
+        "workspace special:pass silent, match:class ^org.keepassxc.KeePassXC$"
+        "workspace 10 silent, match:class ^(steam)$"
+        "tile on, match:class ^(steam)$"
+        "stay_focused on, match:title ^(?!.*Steam Settings)$, match:class ^(steam)$"
+        "workspace 9 silent, match:class ^(org.telegram.desktop)$"
+
+        "border_size 0, rounding 0, match:float false, match:workspace w[tv1]"
+        "border_size 0, rounding 0, match:float false, match:workspace f[1]"
       ];
 
       layerrule = [
-        "blur, ^(wlogout)"
-        "blur, gtk-layer-shell"
+        "blur on, match:namespace ^(wlogout)"
+        "blur on, match:namespace gtk-layer-shell"
       ];
 
       bind = [
