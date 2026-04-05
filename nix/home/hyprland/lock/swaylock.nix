@@ -3,10 +3,6 @@ let
   palette = config.colorScheme.palette;
 in
 {
-  #home.packages = [
-  #  pkgs.swaylock-effects
-  #];
-
   programs.swaylock = {
     enable = true;
     package = pkgs.swaylock-effects;
