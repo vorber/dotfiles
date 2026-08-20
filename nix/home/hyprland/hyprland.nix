@@ -4,6 +4,20 @@ let
 in
 {
   home.packages = [pkgs.variety];
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+    ];
+    xdgOpenUsePortal = true;
+    config.hyprland = {
+      default = [ "hyprland" "gtk" ];
+      "org.freedesktop.impl.portal.FileChooser" = "gtk";
+      "org.freedesktop.impl.portal.Print" = "gtk";
+    };
+  };
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;

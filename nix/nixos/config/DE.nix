@@ -1,4 +1,4 @@
-{pkgs, inputs, ...}:
+{pkgs, inputs, config, ...}:
 {
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.wayland = true;
@@ -21,24 +21,15 @@
 
   programs.hyprland = {
     enable = true;
+    withUWSM = true;
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;
     xwayland.enable = true;
   };
-#needed for swaylock to work, see https://nix-community.github.io/home-manager/options.xhtml#opt-programs.swaylock.enable
-  security.pam.services.swaylock = {};
+
   environment.systemPackages = with pkgs; [
     dunst #swaynotificationcenter #or dunst? #or mako?
     libnotify
     swww
     networkmanagerapplet
   ];
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-#TODO: check others
-      #pkgs.xdg-desktop-portal-gtk
-
-    ];
-  };
 }
