@@ -42,7 +42,9 @@ in
     package = hyprlandPkgs.hyprland;
     portalPackage = hyprlandPkgs.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
-    systemd.enable = true;
+    # UWSM (programs.hyprland.withUWSM) already exports the environment and
+    # manages graphical-session.target; HM's own session target would duplicate it.
+    systemd.enable = false;
 
     # Hyprland >= 0.55 reads hyprland.lua; the hyprlang (hyprland.conf) parser
     # has since been removed. home.stateVersion < 26.05 still defaults to
