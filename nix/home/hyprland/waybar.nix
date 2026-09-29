@@ -8,6 +8,8 @@ in
   {
     enable = true;
     package = waybar;
+    # Runs under graphical-session.target, so systemd restarts it if it crashes.
+    systemd.enable = true;
 
     settings = [{
       layer = "top";

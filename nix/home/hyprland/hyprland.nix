@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, launcher, waybar, ... }:
+{ pkgs, lib, inputs, launcher, ... }:
 let
   terminal = "alacritty";
   hyprlandPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
@@ -6,21 +6,43 @@ let
   # Render a Nix value as a Lua literal, so interpolated strings are quoted safely.
   lua = lib.generators.toLua { };
 
+  # Launch apps as systemd scopes under app-graphical.slice, so they are not
+  # children of the compositor process.
+  app = cmd: "uwsm app -- ${cmd}";
+
   samsung = "desc:Samsung Electric Company Odyssey G80SD H1AK500000";
   lg = "desc:LG Electronics LG HDR 4K 0x00006F1B";
   #asus = "desc:Ancor Communications Inc ASUS VS247 G8LMTF096313";
 
-  startupScript = pkgs.writeShellScriptBin "start" ''
-    ${waybar}/bin/waybar &
-    ${pkgs.awww}/bin/awww-daemon &
-
-    sleep 1
-
-    ${pkgs.awww}/bin/awww img ~/Pictures/wallpaper.png &
+  setWallpaper = pkgs.writeShellScript "set-wallpaper" ''
+    # awww-daemon is Type=simple; wait until its socket answers.
+    for _ in $(seq 50); do
+      ${pkgs.awww}/bin/awww query >/dev/null 2>&1 && break
+      sleep 0.2
+    done
+    exec ${pkgs.awww}/bin/awww img "$HOME/Pictures/wallpaper.png"
   '';
 in
 {
   home.packages = [pkgs.variety];
+
+  # Session services: started by graphical-session.target (driven by UWSM),
+  # restarted by systemd if they crash, stopped cleanly on logout.
+  services.awww.enable = true;
+  systemd.user.services.awww-wallpaper = {
+    Unit = {
+      Description = "Set wallpaper with awww";
+      Requires = [ "awww.service" ];
+      After = [ "awww.service" ];
+      PartOf = [ "awww.service" ];
+    };
+    Service = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${setWallpaper}";
+    };
+    Install.WantedBy = [ "awww.service" ];
+  };
 
   xdg.portal = {
     enable = true;
@@ -127,10 +149,10 @@ in
 
       workspace_rule = [
         #{ workspace = "1"; monitor = asus; default = true; persistent = true; on_created_empty = "firefox"; }
-        { workspace = "1"; monitor = samsung; default = true; persistent = true; on_created_empty = "firefox"; }
-        { workspace = "9"; monitor = samsung; default = true; persistent = true; on_created_empty = "telegram-desktop"; }
-        { workspace = "2"; monitor = lg;      default = true; persistent = true; on_created_empty = "${terminal} -e tmux a"; }
-        { workspace = "special:pass"; on_created_empty = "KeePassXC"; persistent = true; }
+        { workspace = "1"; monitor = samsung; default = true; persistent = true; on_created_empty = app "firefox"; }
+        { workspace = "9"; monitor = samsung; default = true; persistent = true; on_created_empty = app "telegram-desktop"; }
+        { workspace = "2"; monitor = lg;      default = true; persistent = true; on_created_empty = app "${terminal} -e tmux a"; }
+        { workspace = "special:pass"; on_created_empty = app "keepassxc"; persistent = true; }
         { workspace = "w[tv1]"; gaps_out = 0; gaps_in = 0; }
         { workspace = "f[1]";   gaps_out = 0; gaps_in = 0; }
       ];
@@ -166,25 +188,25 @@ in
     };
 
     # Autostart and binds are plain Lua: dispatchers are Lua values, and the
-    # numbered workspace binds are a loop.
+    # numbered workspace binds are a loop. Waybar, awww, dunst and tray applets
+    # are systemd user services / XDG autostart entries, not started from here.
     extraConfig = ''
       hl.on("hyprland.start", function()
-        --TODO: pass cursor theme with global config
+        --TODO: pass cursor theme with global config (HM only writes dconf with gtk.enable)
         hl.exec_cmd(${lua "gsettings set org.gnome.desktop.interface cursor-theme 'volantes_cursors'"})
-        hl.exec_cmd(${lua "${startupScript}/bin/start"})
-        hl.exec_cmd("telegram-desktop", { workspace = "9 silent" })
-        hl.exec_cmd("blueman-applet")
+        -- placed on workspace 9 by the window rule
+        hl.exec_cmd(${lua (app "telegram-desktop")})
       end)
 
       local mod = "SUPER"
-      local terminal = ${lua terminal}
+      local terminal = ${lua (app terminal)}
       local launcher = ${lua launcher.run}
 
       hl.bind(mod .. " + T", hl.dsp.exec_cmd(terminal))
       hl.bind(mod .. " + Return", hl.dsp.exec_cmd(terminal .. " -e tmux a"))
       hl.bind(mod .. " + R", hl.dsp.exec_cmd(launcher))
       hl.bind(mod .. " + G", hl.dsp.exec_cmd(launcher))
-      hl.bind(mod .. " + B", hl.dsp.exec_cmd("firefox"))
+      hl.bind(mod .. " + B", hl.dsp.exec_cmd(${lua (app "firefox")}))
       hl.bind(mod .. " + Q", hl.dsp.window.close())
       hl.bind(mod .. " + L", hl.dsp.exec_cmd("swaylock --grace 0 --fade-in 0"))
       hl.bind(mod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
