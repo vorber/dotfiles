@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, launcher, ... }:
+{ pkgs, lib, inputs, launcher, waybar, ... }:
 let
   terminal = "alacritty";
   hyprlandPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
@@ -11,7 +11,7 @@ let
   #asus = "desc:Ancor Communications Inc ASUS VS247 G8LMTF096313";
 
   startupScript = pkgs.writeShellScriptBin "start" ''
-    ${pkgs.waybar}/bin/waybar &
+    ${waybar}/bin/waybar &
     ${pkgs.awww}/bin/awww-daemon &
 
     sleep 1

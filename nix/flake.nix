@@ -25,6 +25,13 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+    # Waybar 0.15.0 (latest release) still sends legacy hyprctl dispatches,
+    # which Lua-configured Hyprland rejects; master detects the Lua protocol.
+    # Drop this once nixpkgs ships a release newer than 0.15.0.
+    waybar = {
+      url = "github:Alexays/Waybar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }:

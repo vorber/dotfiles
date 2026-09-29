@@ -1,4 +1,4 @@
-{ config, launcher, ... }:
+{ config, launcher, waybar, ... }:
 let
   palette = config.colorScheme.palette;
   betterTransition = "all 0.3s cubic-bezier(.55,-0.68,.48,1.682)";
@@ -7,6 +7,7 @@ in
   programs.waybar = 
   {
     enable = true;
+    package = waybar;
 
     settings = [{
       layer = "top";
