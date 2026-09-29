@@ -1,6 +1,7 @@
-{ pkgs, launcher, ... }:
+{ pkgs, lib, inputs, launcher, ... }:
 let
   terminal = "alacritty";
+  hyprlandPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   home.packages = [pkgs.variety];
@@ -20,6 +21,10 @@ in
   };
   wayland.windowManager.hyprland = {
     enable = true;
+    # Keep in lockstep with programs.hyprland.package (nixos/config/DE.nix);
+    # otherwise hyprctl, the reload hook and the Lua stubs come from nixpkgs.
+    package = hyprlandPkgs.hyprland;
+    portalPackage = hyprlandPkgs.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
     systemd.enable = true;
 
