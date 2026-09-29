@@ -12,11 +12,11 @@ let
 
   startupScript = pkgs.writeShellScriptBin "start" ''
     ${pkgs.waybar}/bin/waybar &
-    ${pkgs.swww}/bin/swww-daemon &
+    ${pkgs.awww}/bin/awww-daemon &
 
     sleep 1
 
-    ${pkgs.swww}/bin/swww img ~/Pictures/wallpaper.png &
+    ${pkgs.awww}/bin/awww img ~/Pictures/wallpaper.png &
   '';
 in
 {

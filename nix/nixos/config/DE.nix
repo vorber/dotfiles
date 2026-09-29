@@ -28,7 +28,7 @@
   environment.systemPackages = with pkgs; [
     dunst #swaynotificationcenter #or dunst? #or mako?
     libnotify
-    swww
+    awww
     networkmanagerapplet
   ];
 }
