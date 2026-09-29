@@ -1,7 +1,6 @@
 {pkgs, inputs, config, ...}:
 {
   services.desktopManager.gnome.enable = true;
-  services.displayManager.gdm.wayland = true;
   services.displayManager.gdm.enable = true;
   services.xserver = {
     # Enable the X11 windowing system.
