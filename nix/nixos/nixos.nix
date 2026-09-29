@@ -68,9 +68,10 @@
     useXkbConfig = true; # use xkb.options in tty.
   };
 
+  virtualisation.docker.enable = true;
   virtualisation.podman = {
     enable = true;
-    dockerCompat = true;
+    #dockerCompat = true;
   };
 
   services = {
@@ -144,6 +145,7 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vorber = {
+    extraGroups = ["docker"];
     packages = with pkgs; [
       pinentry-curses
       tree
