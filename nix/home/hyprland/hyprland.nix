@@ -29,6 +29,17 @@ in
   # Session services: started by graphical-session.target (driven by UWSM),
   # restarted by systemd if they crash, stopped cleanly on logout.
   services.awww.enable = true;
+
+  # UWSM runs XDG autostart entries. GNOME's default IBus input method ships
+  # /etc/xdg/autostart/ibus-daemon.desktop (NotShowIn=GNOME;KDE), and IBus pops up
+  # "should be called from the desktop session" on Hyprland. Layouts come from
+  # xkb here, so hide it for this user.
+  xdg.configFile."autostart/ibus-daemon.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=IBus
+    Hidden=true
+  '';
   systemd.user.services.awww-wallpaper = {
     Unit = {
       Description = "Set wallpaper with awww";
@@ -150,7 +161,7 @@ in
       workspace_rule = [
         #{ workspace = "1"; monitor = asus; default = true; persistent = true; on_created_empty = "firefox"; }
         { workspace = "1"; monitor = samsung; default = true; persistent = true; on_created_empty = app "firefox"; }
-        { workspace = "9"; monitor = samsung; default = true; persistent = true; on_created_empty = app "telegram-desktop"; }
+        { workspace = "9"; monitor = samsung; default = true; persistent = true; on_created_empty = app "org.telegram.desktop.desktop"; }
         { workspace = "2"; monitor = lg;      default = true; persistent = true; on_created_empty = app "${terminal} -e tmux a"; }
         { workspace = "special:pass"; on_created_empty = app "keepassxc"; persistent = true; }
         { workspace = "w[tv1]"; gaps_out = 0; gaps_in = 0; }
@@ -194,8 +205,9 @@ in
       hl.on("hyprland.start", function()
         --TODO: pass cursor theme with global config (HM only writes dconf with gtk.enable)
         hl.exec_cmd(${lua "gsettings set org.gnome.desktop.interface cursor-theme 'volantes_cursors'"})
-        -- placed on workspace 9 by the window rule
-        hl.exec_cmd(${lua (app "telegram-desktop")})
+        -- placed on workspace 9 by the window rule; launched by desktop entry
+        -- because the binary is no longer called telegram-desktop
+        hl.exec_cmd(${lua (app "org.telegram.desktop.desktop")})
       end)
 
       local mod = "SUPER"
