@@ -28,6 +28,18 @@
     xwayland.enable = true;
   };
 
+  # withUWSM only enables UWSM; the "(uwsm-managed)" session shipped inside the
+  # Hyprland package runs `uwsm start ... hyprland.desktop` (via start-hyprland)
+  # and hangs on a grey screen under GDM. Register the NixOS-generated entry,
+  # which execs the binary directly (same as `uwsm start -F -- Hyprland` from a
+  # TTY, which works). Named "hyprland-nixos" to avoid clashing with the
+  # package's hyprland-uwsm.desktop; pick "Hyprland NixOS (UWSM)" in GDM.
+  programs.uwsm.waylandCompositors.hyprland-nixos = {
+    prettyName = "Hyprland NixOS";
+    comment = "Hyprland compositor managed by UWSM";
+    binPath = "/run/current-system/sw/bin/Hyprland";
+  };
+
   environment.systemPackages = with pkgs; [
     dunst #swaynotificationcenter #or dunst? #or mako?
     libnotify
