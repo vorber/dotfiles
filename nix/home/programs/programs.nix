@@ -70,14 +70,16 @@
           enable = true;
           #TODO: don't hardcode home path
           extraConfig = ''
-          upload_rate = 1000
-          directory = /home/vorber/incoming/torrents/incomplete
-          session = /home/vorber/incoming/.rtorrent
-          port_range = 6900-6999
-          encryption = allow_incoming,try_outgoing,enable_retry
-          dht = on
+          # rtorrent >= 0.16 only accepts old aliases (dht, schedule2, ...) with -D,
+          # so use the canonical command names throughout.
+          throttle.global_up.max_rate.set_kb = 1000
+          directory.default.set = /home/vorber/incoming/torrents/incomplete
+          session.path.set = /home/vorber/incoming/.rtorrent
+          network.listen.port.range.set = 6900-6999
+          protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
+          dht.mode.set = on
 
-          schedule2 = watch_start, 20, 10, "load.start=~/incoming/torrents/*.torrent, d.custom1.set=~/incoming/complete"
+          schedule = watch_start, 20, 10, "load.start=~/incoming/torrents/*.torrent, d.custom1.set=~/incoming/complete"
 
           # upon completion, move content to path specified above via custom1
           method.insert = d.data_path, simple, "if=(d.is_multi_file), (cat,(d.directory),/), (cat,(d.directory),/,(d.name))"
