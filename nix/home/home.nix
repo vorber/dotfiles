@@ -85,6 +85,7 @@
 #    inherit config pkgs lib;
 #  };
   home.pointerCursor = {
+    enable = true;
     gtk.enable = true;
     package = pkgs.volantes-cursors;
     name = "volantes_cursors";

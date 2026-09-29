@@ -25,7 +25,7 @@
       }
       tmuxPlugins.tmux-fzf
       {
-        plugin = inputs.tmux-sessionx.packages.${pkgs.system}.default;
+        plugin = inputs.tmux-sessionx.packages.${pkgs.stdenv.hostPlatform.system}.default;
         extraConfig = ''
           set -g @sessionx-zoxide-mode 'on'
           set -g @sessionx-bind 'o'

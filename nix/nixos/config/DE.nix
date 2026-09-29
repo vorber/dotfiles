@@ -18,10 +18,13 @@
     trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
   };
 
-  programs.hyprland = {
+  programs.hyprland = let
+    hyprlandPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+  in {
     enable = true;
     withUWSM = true;
-    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+    package = hyprlandPkgs.hyprland;
+    portalPackage = hyprlandPkgs.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
   };
 

@@ -6,7 +6,7 @@ let
 
 in rec {
   hmConfig = let
-    inherit (pkgs.stdenv) isLinux;
+    inherit (pkgs.stdenv.hostPlatform) isLinux;
   in {
     options = {#TODO: refactor to use single attr set?
       isNixOS = lib.mkOption {

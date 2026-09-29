@@ -8,16 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    systems.url = "github:nix-systems/default";
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.systems.follows = "systems";
-    };
     nix-colors.url = "github:misterio77/nix-colors";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
     tmux-sessionx.url = "github:omerxx/tmux-sessionx";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
