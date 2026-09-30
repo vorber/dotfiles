@@ -77,7 +77,7 @@
                 {
                   home-manager = {
                     useUserPackages = true;
-                    users.${user}.imports = homeModules settings;
+                    users.${user}.imports = homeModules settings ++ [ ./home/programs/flood.nix ];
                     extraSpecialArgs = { inherit inputs; };
                   };
                 }
