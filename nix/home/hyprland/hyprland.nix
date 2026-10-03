@@ -185,7 +185,7 @@ in
         { match.class = "^org.keepassxc.KeePassXC$"; workspace = "special:pass silent"; }
         { match.class = "^(steam)$"; workspace = "10 silent"; }
         { match.class = "^(steam)$"; tile = true; }
-        { match = { class = "^(steam)$"; title = "negative:.*Steam Settings.*"; }; stay_focused = true; }
+        # { match = { class = "^(steam)$"; title = "negative:.*Steam Settings.*"; }; stay_focused = true; }
         { match.class = "^(org.telegram.desktop)$"; workspace = "9 silent"; }
 
         { match = { float = false; workspace = "w[tv1]"; }; border_size = 0; rounding = 0; }
