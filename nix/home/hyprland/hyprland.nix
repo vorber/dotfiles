@@ -137,6 +137,9 @@ in
         };
 
         animations.enabled = true;
+
+        # Let a new lockscreen take over if the current one crashes.
+        misc.allow_session_lock_restore = true;
       };
 
       curve = {
@@ -220,7 +223,7 @@ in
       hl.bind(mod .. " + G", hl.dsp.exec_cmd(launcher))
       hl.bind(mod .. " + B", hl.dsp.exec_cmd(${lua (app "firefox")}))
       hl.bind(mod .. " + Q", hl.dsp.window.close())
-      hl.bind(mod .. " + L", hl.dsp.exec_cmd("swaylock --grace 0 --fade-in 0"))
+      hl.bind(mod .. " + L", hl.dsp.exec_cmd("lock-session"))
       hl.bind(mod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
       hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
       hl.bind(mod .. " + P", hl.dsp.layout("togglesplit"))

@@ -31,7 +31,7 @@ in {
       }
       {
         "label" = "lock";
-        "action" = "sleep 1; hyprlock";
+        "action" = "sleep 1; lock-session";
         "text" = "Lock";
         "keybind" = "l";
       }

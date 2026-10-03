@@ -1,8 +1,23 @@
 { config, pkgs, ... }:
 let
   palette = config.colorScheme.palette;
+
+  # hyprlock (like swaylock) can crash when a monitor is hotplugged while
+  # locked. Hyprland keeps the session locked; with
+  # misc.allow_session_lock_restore a new locker can take over, so respawn it
+  # until it exits cleanly (i.e. after a real unlock).
+  lockSession = pkgs.writeShellScriptBin "lock-session" ''
+    ${pkgs.procps}/bin/pgrep -xu "$UID" hyprlock >/dev/null && exit 0
+    for _ in $(seq 20); do
+      ${config.programs.hyprlock.package}/bin/hyprlock "$@" && exit 0
+      sleep 1
+    done
+    exit 1
+  '';
 in
 {
+  home.packages = [ lockSession ];
+
   programs.hyprlock = {
     enable = true;
     settings = {
