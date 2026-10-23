@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    github-copilot = {
+      url = "github:fumoctl/GithubCopilot-Nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-colors.url = "github:misterio77/nix-colors";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
@@ -77,7 +81,10 @@
                 {
                   home-manager = {
                     useUserPackages = true;
-                    users.${user}.imports = homeModules settings ++ [ ./home/programs/flood.nix ];
+                    users.${user}.imports = homeModules settings ++ [
+                      ./home/programs/flood.nix
+                      ./home/programs/copilot.nix
+                    ];
                     extraSpecialArgs = { inherit inputs; };
                   };
                 }
